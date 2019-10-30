@@ -1,0 +1,16 @@
+/**
+ * application 模块接口列表
+ */
+
+
+import axios from './axios'; // 导入http中创建的axios实例
+// import qs from 'qs'; // 根据需求是否导入qs模块 qs.stringify()
+
+const application = {
+  // 扫描 结果查询 qrCode/qrCodeScan
+  scanQR(param) {
+    return axios.get(`http://localhost:3000/user/userinfo`, {params: param});
+  }
+};
+
+export default application;
