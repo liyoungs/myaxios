@@ -4,8 +4,8 @@
  */
 import axios from 'axios';
 import router from '../router';
-import store from '../store/index';
-import { Message } from 'element-ui';
+import store from '../store';
+import {Message} from 'element-ui';
 
 /**
  * 提示函数
@@ -92,37 +92,35 @@ instance.interceptors.request.use(
   error => {
     // store.commit('isHide');
     Promise.error(error)
-  })
+  });
 
 // 响应拦截器
-instance.interceptors.response.use(
+instance.interceptors.response.use(res => {
   // 请求成功
-  res => {
-    // store.commit('isHide');
-    return res.status === 200 ? Promise.resolve(res) : Promise.reject(res)
-  },
+  // store.commit('isHide');
+  return res.status === 200 ? Promise.resolve(res) : Promise.reject(res)
+}, error => {
   // 请求失败
-  error => {
-    // store.commit('isHide');
-    const { response } = error;
-    if (response) {
-      // 请求已发出，但是不在2xx的范围
-      errorHandle(response.status, response.data.message);
-      return Promise.reject(response);
+  // store.commit('isHide');
+  const {response} = error;
+  if (response) {
+    // 请求已发出，但是不在2xx的范围
+    errorHandle(response.status, response.data.message);
+    return Promise.reject(response);
+  } else {
+    // Something happened in setting up the request that triggered an Error
+    console.log('Error message：', error.message);
+    // 处理断网的情况
+    // eg:请求超时或断网时，更新 state 的 network 状态
+    // network 状态在 app.vue 中控制着一个全局的断网提示组件的显示隐藏
+    // 关于断网组件中的刷新重新获取数据，会在断网组件中说明
+    if (!window.navigator.onLine) {
+      store.commit('changeNetwork', false);
     } else {
-      // Something happened in setting up the request that triggered an Error
-      console.log('Error message：', error.message);
-      // 处理断网的情况
-      // eg:请求超时或断网时，更新 state 的 network 状态
-      // network 状态在 app.vue 中控制着一个全局的断网提示组件的显示隐藏
-      // 关于断网组件中的刷新重新获取数据，会在断网组件中说明
-      if (!window.navigator.onLine) {
-        store.commit('changeNetwork', false);
-      } else {
-        return Promise.reject(error);
-      }
+      return Promise.reject(error);
     }
-    console.log(error.config);
-  });
+  }
+  console.log(error.config);
+});
 
 export default instance;

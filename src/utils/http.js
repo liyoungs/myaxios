@@ -1,6 +1,6 @@
 import axios from "axios"
 import store from "../store";
-// import router from "../router"
+import router from "../router"
 import {Message, MessageBox, Loading} from "element-ui";
 
 let loadingInstance = null; //全屏 Loading 的实例
@@ -66,7 +66,8 @@ instance.interceptors.response.use(response => {
   *  status >= 200 && status < 300;
   * 成功状态码
   * */
-  return response
+  console.log(response);
+  return response.status === 200 ? Promise.resolve(response) : Promise.reject(response);
 }, error => {
   /*
 * 关闭 loading
@@ -76,7 +77,61 @@ instance.interceptors.response.use(response => {
 *  status < 200 || status >= 300;
 * 失败状态码
 * */
-  return Promise.reject(error);
-});
+  const {response} = error;
+  if (response) {
+    // console.log(response);
+    // The request was made and the server responded with a status code
+    // that falls out of the range of 2xx
+    // console.log(response.data);
+    // console.log(response.status);
+    // console.log(response.headers);
+    // console.log(response.statusText);
+    switch (response.status) {
+      case 400:
+        MessageBox.confirm("客户端请求的语法错误，服务器无法理解", 'Error');
+        break;
+      case 401:
+        MessageBox.confirm("要求用户的身份认证", 'Error');
+        break;
+      case 403:
+        MessageBox.confirm('登录过期，请重新登录', 'Error');
+        break;
+      case 404:
+        Message.warning(response.statusText);
+        break;
+      default:
+        return Promise.reject(error.response);
+    }
+
+
+    // } else if (error.request) {
+    //   // The request was made but no response was received
+    //   // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+    //   // http.ClientRequest in node.js
+    //   console.log(error.request);
+    //   console.log('Error', error.message);
+
+  } else {
+    // Something happened in setting up the request that triggered an Error
+    // console.log('Error', error.message);
+    // MessageBox.confirm(message, title, options)
+    MessageBox.confirm(error.message, 'Error', {
+      confirmButtonText: '刷新重试',
+      cancelButtonText: '返回首页',
+      type: 'warning'
+    }).then(() => {
+      Message({
+        type: 'success',
+        message: '删除成功!'
+      });
+    }).catch(() => {
+      router.push("/about")
+    });
+    console.log(error.config);
+    return Promise.reject(error);
+  }
+
+})
+;
 
 export default instance

@@ -15,7 +15,9 @@
         </el-submenu>
       </el-submenu>
       <el-menu-item index="3" disabled>消息中心</el-menu-item>
-      <el-menu-item index="4"><a href="#https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
+      <el-menu-item index="4">
+        <router-link to="/about">关于我们</router-link>
+      </el-menu-item>
     </el-menu>
     <!--    <HelloWorld msg="prop test"></HelloWorld>-->
   </div>
@@ -43,8 +45,10 @@
         created() {
             console.log("created");
             // console.log(this.$ajax);
-            this.$ajax.application.scanQR({sss:2334}).then(res => {
-                console.log(res)
+            this.$ajax.application.scanQR({sss: 2334}).then(res => {
+                console.log("res");
+                console.log(res);
+                console.log("res")
             }).catch(error => {
                 console.log(error)
             })
