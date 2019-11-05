@@ -17,7 +17,7 @@ const tip = msg => {
     // type: "success/warning/info/error",
     duration: 1000
   });
-}
+};
 
 /**
  * 跳转登录页

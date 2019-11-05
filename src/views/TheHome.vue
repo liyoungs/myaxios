@@ -26,7 +26,6 @@
 <script>
     // @ is an alias to /src
     // import HelloWorld from '@/components/HelloWorld'
-
     export default {
         name: "TheHome",
         data() {
@@ -44,6 +43,7 @@
         },
         created() {
             console.log("created");
+
             // console.log(this.$ajax);
             this.$ajax.application.scanQR({sss: 2334}).then(res => {
                 console.log("res");

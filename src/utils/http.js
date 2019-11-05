@@ -39,6 +39,9 @@ instance.interceptors.request.use(config => {
   * 显示 loading
   * */
   loadingInstance = Loading.service({lock: true, text: "拼命加载中"});
+  if (store.getters.AUTH_TOKEN) {//是否 存在token
+    config.headers['Authorization'] = AUTH_TOKEN;
+  }
   return config;
 }, error => {
   /*
@@ -49,6 +52,7 @@ instance.interceptors.request.use(config => {
   /*
   * 响应错误
   * */
+  console.warn(error);
   return Promise.reject(error);
 });
 /*
