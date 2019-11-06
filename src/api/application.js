@@ -10,6 +10,9 @@ const application = {
   // 扫描 结果查询 qrCode/qrCodeScan
   scanQR(param) {
     return axios.get(`http://localhost:3000/user/userinfo`, {params: param});
+  },
+  login(param){
+    return axios.get(`http://localhost:3000/user/userinfo`, {params: param});
   }
 };
 

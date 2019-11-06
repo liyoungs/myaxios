@@ -39,8 +39,8 @@ instance.interceptors.request.use(config => {
   * 显示 loading
   * */
   loadingInstance = Loading.service({lock: true, text: "拼命加载中"});
-  if (store.getters.AUTH_TOKEN) {//是否 存在token
-    config.headers['Authorization'] = AUTH_TOKEN;
+  if (store.state.AUTH_TOKEN) {//是否 存在token
+    config.headers['Authorization'] = store.state.AUTH_TOKEN;
   }
   return config;
 }, error => {
@@ -95,7 +95,15 @@ instance.interceptors.response.use(response => {
         MessageBox.confirm("客户端请求的语法错误，服务器无法理解", 'Error');
         break;
       case 401:
-        MessageBox.confirm("要求用户的身份认证", 'Error');
+        // 返回 401 清除token信息并跳转到登录页面
+        store.commit('removeToken');
+        if (router.currentRoute.path !== 'login') {
+          router.replace({
+            path: 'login',
+            query: {redirect: router.currentRoute.fullPath}
+          });
+        }
+        // MessageBox.confirm("要求用户的身份认证", 'Error');
         break;
       case 403:
         MessageBox.confirm('登录过期，请重新登录', 'Error');
@@ -126,7 +134,7 @@ instance.interceptors.response.use(response => {
     }).then(() => {
       Message({
         type: 'success',
-        message: '删除成功!'
+        message: '刷新成功!'
       });
     }).catch(() => {
       router.push("/about")
