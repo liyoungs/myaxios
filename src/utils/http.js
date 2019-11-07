@@ -112,7 +112,12 @@ instance.interceptors.response.use(response => {
         Message.warning(response.statusText);
         break;
       default:
-        return Promise.reject(error.response);
+        Message({
+          type: 'error',
+          message: response.statusText
+        });
+        // return Promise.reject(error.response);
+        break;
     }
 
 

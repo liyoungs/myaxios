@@ -45,13 +45,13 @@
             console.log("created");
 
             // console.log(this.$ajax);
-            this.$ajax.application.scanQR({sss: 2334}).then(res => {
-                console.log("res");
-                console.log(res);
-                console.log("res")
-            }).catch(error => {
-                console.log(error)
-            })
+            // this.$ajax.application.scanQR({sss: 2334}).then(res => {
+            //     console.log("res");
+            //     console.log(res);
+            //     console.log("res")
+            // }).catch(error => {
+            //     console.log(error)
+            // })
         }
     }
 </script>

@@ -4,8 +4,8 @@ import PersistedState from "vuex-persistedstate"
 
 Vue.use(Vuex);
 const state = {
-  AUTH_TOKEN: "aksddkdm"
-  // AUTH_TOKEN: null
+  // AUTH_TOKEN: "aksddkdm"
+  AUTH_TOKEN: null
 };
 const mutations = {
   setToken(state, newValue) {

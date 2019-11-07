@@ -73,19 +73,44 @@
         },
         methods: {
             submitForm(formName) {
-                this.$refs[formName].validate((valid) => {
+                let that = this;
+                that.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.$ajax.application.login({sss: 2334}).then(res => {
+                        const params = {
+                            pass: that.myData.pass,
+                            checkPass: that.myData.checkPass,
+                            age: that.myData.age
+                        };
+                        that.$ajax.application.login(params).then(res => {
                             console.log("res");
-                            console.log(res);
+                            if (res.data) {
+                                console.log(res);
+                                if (res.data.token) {
+                                    that.$store.commit('setToken', res.data.token);
+                                }
+                                that.$router.push(that.$route.query.redirect);
+                            } else {
+                                that.$message({
+                                    type: 'error',
+                                    message: res.statusText
+                                });
+                            }
                             console.log("res")
                         }).catch(error => {
-                            console.log(error)
+                            console.warn(error);
+                            that.$message({
+                                type: 'error',
+                                message: error.statusText
+                            });
                         })
                         // alert("submit")
-                    } else {
-                        console.warn("error");
-                        return false
+                        // } else {
+                        //     console.warn("error");
+                        //     that.$message({
+                        //         type: 'error',
+                        //         message: response.statusText
+                        //     });
+                        //     return false
                     }
 
                 })
