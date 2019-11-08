@@ -88,7 +88,8 @@
                                 if (res.data.token) {
                                     that.$store.commit('setToken', res.data.token);
                                 }
-                                that.$router.push(that.$route.query.redirect);
+                                const redirectUrl = decodeURIComponent(that.$route.query.redirect || '/');
+                                that.$router.push(redirectUrl);
                             } else {
                                 that.$message({
                                     type: 'error',
