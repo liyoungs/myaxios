@@ -5,7 +5,7 @@
 import axios from 'axios';
 import router from '../router';
 import store from '../store';
-import {Message} from 'element-ui';
+import { Message } from 'element-ui';
 
 /**
  * 提示函数
@@ -102,7 +102,7 @@ instance.interceptors.response.use(res => {
 }, error => {
   // 请求失败
   // store.commit('isHide');
-  const {response} = error;
+  const { response } = error;
   if (response) {
     // 请求已发出，但是不在2xx的范围
     errorHandle(response.status, response.data.message);

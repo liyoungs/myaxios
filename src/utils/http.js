@@ -1,9 +1,9 @@
 import axios from "axios"
 import store from "../store";
 import router from "../router"
-import {Message, MessageBox, Loading} from "element-ui";
+import { Message, MessageBox, Loading } from "element-ui";
 
-let loadingInstance = null; //全屏 Loading 的实例
+let loadingInstance = null; // 全屏 Loading 的实例
 
 /*
 * 创建 axios 实例
@@ -38,9 +38,9 @@ instance.interceptors.request.use(config => {
   /*
   * 显示 loading
   * */
-  loadingInstance = Loading.service({lock: true, text: "拼命加载中"});
-  if (store.state.AUTH_TOKEN) {//是否 存在token
-    config.headers['Authorization'] = store.state.AUTH_TOKEN;
+  loadingInstance = Loading.service({ lock: true, text: "拼命加载中" });
+  if (store.state.AUTH_TOKEN) { // 是否 存在token
+    config.headers.Authorization = store.state.AUTH_TOKEN;
   }
   return config;
 }, error => {
@@ -64,7 +64,7 @@ instance.interceptors.response.use(response => {
  * 关闭 loading
  * */
   loadingInstance.close();
-// Any status code that lie within the range of 2xx cause this function to trigger
+  // Any status code that lie within the range of 2xx cause this function to trigger
   // Do something with response data
   /*
   *  status >= 200 && status < 300;
@@ -81,7 +81,7 @@ instance.interceptors.response.use(response => {
 *  status < 200 || status >= 300;
 * 失败状态码
 * */
-  const {response} = error;
+  const { response } = error;
   if (response) {
     // console.log(response);
     // The request was made and the server responded with a status code
@@ -100,7 +100,7 @@ instance.interceptors.response.use(response => {
         if (router.currentRoute.path !== 'login') {
           router.replace({
             path: 'login',
-            query: {redirect: router.currentRoute.fullPath}
+            query: { redirect: router.currentRoute.fullPath }
           });
         }
         // MessageBox.confirm("要求用户的身份认证", 'Error');
@@ -120,14 +120,12 @@ instance.interceptors.response.use(response => {
         break;
     }
 
-
     // } else if (error.request) {
     //   // The request was made but no response was received
     //   // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
     //   // http.ClientRequest in node.js
     //   console.log(error.request);
     //   console.log('Error', error.message);
-
   } else {
     // Something happened in setting up the request that triggered an Error
     // console.log('Error', error.message);
@@ -147,7 +145,6 @@ instance.interceptors.response.use(response => {
     console.log(error.config);
     return Promise.reject(error);
   }
-
 })
 ;
 

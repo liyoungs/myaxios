@@ -20,6 +20,6 @@ const store = new Vuex.Store({
   state,
   mutations,
   actions,
-  plugins: [PersistedState({storage: window.sessionStorage})]
+  plugins: [PersistedState({ storage: window.sessionStorage })]
 });
 export default store
