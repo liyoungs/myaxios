@@ -3,6 +3,7 @@ import store from "../store";
 import Router from 'vue-router'
 import TheHome from '@/views/TheHome'
 import TheLogin from '@/views/TheLogin'
+import NotFound from '@/views/NotFound'
 
 const HelloWorld = () => import('@/components/HelloWorld');
 const TheAbout = () => import("@/views/TheAbout");
@@ -41,6 +42,11 @@ const router = new Router({
       meta: {
         requireAuth: true// 添加该字段，表示进入这个路由是需要登录的
       }
+    },
+    {
+      path: "*",
+      name: 'NotFound',
+      component: NotFound
     }
   ]
 });

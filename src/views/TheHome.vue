@@ -34,12 +34,25 @@
       <el-collapse-item name="2" title="JavaScript 变量">
         <el-alert :closable="false" type="error" :title="tip1"></el-alert>
         <p>变量用来存储数据值。变量是用于存储信息的"容器"。</p>
-        <p>JavaScript使用关键字<strong>var</strong>来定义变量使用等号（=）来为变量赋值</p>
-        <el-alert title="JavaScript 中，常见的是驼峰法的命名规则，如 lastName" type="warning" :closable="false" effect="dark" show-icon></el-alert>
+        <p>
+          JavaScript使用关键字
+          <strong>var</strong>来定义变量使用等号（=）来为变量赋值
+        </p>
+        <el-alert
+          title="JavaScript 中，常见的是驼峰法的命名规则，如 lastName"
+          type="warning"
+          :closable="false"
+          effect="dark"
+          show-icon
+        ></el-alert>
       </el-collapse-item>
       <el-collapse-item name="3" title="JavaScript 数据类型📌">
-        <p><b>值类型(基本类型)：</b>字符串（String）、数字(Number)、布尔(Boolean)、对空（Null）、未定义（Undefined）、Symbol</p>
-        <p><b>引用数据类型：</b>对象(Object)、数组(Array)、函数(Function)。</p>
+        <p>
+          <b>值类型(基本类型)：</b>字符串（String）、数字(Number)、布尔(Boolean)、对空（Null）、未定义（Undefined）、Symbol
+        </p>
+        <p>
+          <b>引用数据类型：</b>对象(Object)、数组(Array)、函数(Function)。
+        </p>
         <el-alert title="Symbol 是 ES6 引入了一种新的原始数据类型，表示独一无二的值。" show-icon :closable="false"></el-alert>
         <p>JavaScript 变量均为对象。当您声明一个变量时，就创建了一个新的对象。</p>
       </el-collapse-item>
@@ -49,7 +62,13 @@
     </el-collapse>
     <div>{{ h2Msg }}🛰</div>
     <button type="button" @click="handleSelect">点击事件</button>
-    <img id="myImg" @click="warn('Form cannot be submitted yet.', $event)" src="https://www.runoob.com/images/pic_bulboff.gif" alt="aa" />
+    <input type="checkbox" v-change name id />
+    <img
+      id="myImg"
+      @click="warn('Form cannot be submitted yet.', $event)"
+      src="https://www.runoob.com/images/pic_bulboff.gif"
+      alt="aa"
+    />
   </div>
 </template>
 
@@ -62,7 +81,8 @@ export default {
     return {
       activeName: "3",
       msg: "JavaScript 再充电！！！",
-      msg1: "在编程语言中，一般固定值称为字面量，如 3.14。有数字、字符串、表达式、数组、对象、函数字面量",
+      msg1:
+        "在编程语言中，一般固定值称为字面量，如 3.14。有数字、字符串、表达式、数组、对象、函数字面量",
       tip1: "🚦👀变量是一个名称，字面量是一个值🚦",
       h2Msg: "这是一个测试🛰   <b>你好</b> 🛰"
     };
@@ -79,7 +99,9 @@ export default {
       // } else {
       //     myh1.src = 'https://www.runoob.com/images/pic_bulboff.gif'
       // }
-      myh1.src = myh1.src.match("bulbon") ? "https://www.runoob.com/images/pic_bulboff.gif" : "https://www.runoob.com/images/pic_bulbon.gif";
+      myh1.src = myh1.src.match("bulbon")
+        ? "https://www.runoob.com/images/pic_bulboff.gif"
+        : "https://www.runoob.com/images/pic_bulbon.gif";
     },
     changeImg() {
       const myh1 = document.getElementById("myImg");
@@ -108,9 +130,26 @@ export default {
     console.log(typeof x);
     x = 5;
     console.log(typeof x);
+    x = "ksls";
+    console.log(x);
 
-    x = "D:\\work\\wb\\myvue\\myaxios\\src\\views\\TheHome.vue";
-    console.log(typeof x);
+    const str = "D:\\work\\wb\\myvue\\myaxios\\src\\views\\TheHome.vue"; // \\转义 \
+    console.log(str.charAt(1));
+    console.log(str.concat("ssss"));
+    console.log(str.indexOf("work"));
+    console.log(str.slice(3, 6)); // 开始结束位置
+    console.log(str.substring(3, 6)); // 开始结束位置
+    console.log(str.substr(3, 6)); // 开始位置--所需长度
+    console.log(str.search("w"));
+    console.log(str);
+    console.log(str.match("work"));
+    console.log(str.match("w")[0]);
+    console.log(str);
+    console.log(str);
+    console.log(str);
+    console.log(str);
+    console.log(str);
+
     const obj1 = {
       name: "jim",
       class: "fly"
@@ -120,7 +159,15 @@ export default {
     const arr = [1, "😇", "😈"];
     console.log(typeof arr);
     console.log(Array.isArray(arr));
+  },
+  directives: {
+    change: {
+      update(el) {
+        console.log(el);
+      }
+    }
   }
+  // Vue.directive(id, [definition])
 };
 </script>
 

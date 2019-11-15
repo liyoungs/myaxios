@@ -97,9 +97,12 @@ export default {
                 if (res.data.token) {
                   that.$store.commit("setToken", res.data.token);
                 }
+                console.log(that.$route);
                 const redirectUrl = decodeURIComponent(
                   that.$route.query.redirect || "/"
                 );
+                console.log(redirectUrl);
+                that.$store.commit("setActiveIndex", redirectUrl);
                 that.$router.push(redirectUrl);
               } else {
                 that.$message({

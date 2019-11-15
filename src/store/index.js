@@ -5,9 +5,13 @@ import PersistedState from "vuex-persistedstate"
 Vue.use(Vuex);
 const state = {
   // AUTH_TOKEN: "aksddkdm"
-  AUTH_TOKEN: null
+  AUTH_TOKEN: null,
+  activeIndex: '/'
 };
 const mutations = {
+  setActiveIndex(state, newValue) {
+    state.activeIndex = newValue;
+  },
   setToken(state, newValue) {
     state.AUTH_TOKEN = newValue;
   },

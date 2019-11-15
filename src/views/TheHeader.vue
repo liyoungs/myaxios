@@ -30,7 +30,7 @@ export default {
   name: "TheHeader",
   data() {
     return {
-      activeIndex: "/",
+      // activeIndex: "/",
       menuList: [
         {
           name: "首页",
@@ -39,13 +39,22 @@ export default {
         },
         {
           name: "JS基础",
-          id: "2",
+          id: "/jsBase",
           child: [
             {
               name: "JS用法",
-              id: "2-1"
+              id: "/jsBase1"
+            },
+            {
+              name: "JS用法2",
+              id: "/jsBase2"
             }
           ]
+        },
+        {
+          name: "HelloWorld",
+          id: "/hello",
+          child: null
         }
       ]
     };
@@ -54,12 +63,20 @@ export default {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     }
-    // },
-    // components: {
-    //     HelloWorld
+  },
+  computed: {
+    activeIndex() {
+      return this.$store.state.activeIndex;
+    }
+  },
+  watch: {
+    "$route.path": function(val, oldVal) {
+      console.log("new: %s, old: %s", val, oldVal);
+      this.$store.commit("setActiveIndex", decodeURIComponent(val));
+    }
   },
   created() {
-    console.log("created");
+    console.log("created getRoute");
 
     // console.log(this.$ajax);
     // this.$ajax.application.scanQR({sss: 2334}).then(res => {
