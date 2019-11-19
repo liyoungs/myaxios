@@ -1,6 +1,12 @@
 <template>
   <div>
     <h1 id="myh1">{{ msg }}</h1>
+    <el-alert
+      :closable="false"
+      type="error"
+      effect="dark"
+      title="在 JavaScript 中, null 用于对象, undefined 用于变量，属性和方法。对象只有被定义才有可能为 null，否则为 undefined。"
+    ></el-alert>
     <el-collapse accordion @change="handleChange" v-model="activeName">
       <el-collapse-item title="JavaScript 字面量" name="1">
         <el-alert :closable="false" type="error" title="🚦👀JavaScript 对字母大小写是敏感的🚦"></el-alert>
@@ -55,6 +61,8 @@
         </p>
         <el-alert title="Symbol 是 ES6 引入了一种新的原始数据类型，表示独一无二的值。" show-icon :closable="false"></el-alert>
         <p>JavaScript 变量均为对象。当您声明一个变量时，就创建了一个新的对象。</p>
+        <el-alert :closable="false" title="测试对象是否存在" show-icon></el-alert>
+        <code>if(typeof myObj !== "undefined" && myObj !== null)</code>
       </el-collapse-item>
       <el-collapse-item title="JavaScript 函数" name="4">
         <el-alert title="函数是由事件驱动的或者当它被调用时执行的可重复使用的代码块。" :closable="false" show-icon></el-alert>
@@ -152,13 +160,25 @@ export default {
 
     const obj1 = {
       name: "jim",
-      class: "fly"
+      class: "fly",
+      face1: "😇",
+      face2: "😈",
+      "🎯": "🌹"
     };
     console.log(obj1.name);
     // console.log(obj1["name"]);
     const arr = [1, "😇", "😈"];
     console.log(typeof arr);
     console.log(Array.isArray(arr));
+    for (const key in obj1) {
+      // if (obj1.hasOwnProperty(key)) {
+      const element = obj1[key];
+      console.log(element);
+      // }
+    }
+    for (var v of [1, 2, 3]) {
+      console.log(v);
+    }
   },
   directives: {
     change: {
