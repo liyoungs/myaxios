@@ -51,4 +51,5 @@ module.exports = {
   //   requireModuleExtension: false
   // },
   // productionSourceMap: false // 去除map文件
+  outputDir: 'index'
 }
