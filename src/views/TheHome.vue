@@ -66,6 +66,8 @@
       </el-collapse-item>
       <el-collapse-item title="JavaScript 函数" name="4">
         <el-alert title="函数是由事件驱动的或者当它被调用时执行的可重复使用的代码块。" :closable="false" show-icon></el-alert>
+        <p>变量在es6之前只有全局变量和局部变量，也就是说变量的作用域是全局或者局部（函数内）</p>
+        <mark>es6添加了:let,const来声明变量。增加了块级作用域（{}）的概念，类似一个局部的概念</mark>
       </el-collapse-item>
     </el-collapse>
     <div>{{ h2Msg }}🛰</div>
@@ -179,6 +181,9 @@ export default {
     for (var v of [1, 2, 3]) {
       console.log(v);
     }
+    const arraySet = [1, "1", 1, "a", "a"];
+    console.log(arraySet);
+    console.log([...new Set(arraySet)]);
   },
   directives: {
     change: {
