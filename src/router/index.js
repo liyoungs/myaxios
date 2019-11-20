@@ -4,9 +4,12 @@ import Router from 'vue-router'
 import TheHome from '@/views/TheHome'
 import TheLogin from '@/views/TheLogin'
 import NotFound from '@/views/NotFound'
+import JsBase from "@/components/jsbase/JsBase";
 
 const HelloWorld = () => import('@/components/HelloWorld');
 const TheAbout = () => import("@/views/TheAbout");
+// js base
+const JsBase1 = () => import("@/components/jsbase/JsBase1");
 
 Vue.use(Router);
 
@@ -26,6 +29,17 @@ const router = new Router({
       path: '/login',
       name: 'TheLogin',
       component: TheLogin
+    },
+    {
+      path: '/jsBase',
+      component: JsBase,
+      children: [
+        {
+          path: '/jsBase1',
+          name: 'JsBase1',
+          component: JsBase1
+        }
+      ]
     },
     {
       path: '/about',

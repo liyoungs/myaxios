@@ -42,8 +42,8 @@ export default {
           id: "/jsBase",
           child: [
             {
-              name: "JS用法",
-              id: "/jsBase1"
+              name: "JavaScript 代码规范",
+              id: "jsBase1"
             },
             {
               name: "JS用法2",
