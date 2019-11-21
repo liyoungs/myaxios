@@ -140,6 +140,6 @@ export default {
 <style scoped>
 .myForm {
   width: 460px;
-  margin: 0 auto;
+  margin: 40px auto 0;
 }
 </style>

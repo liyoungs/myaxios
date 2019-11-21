@@ -1,15 +1,18 @@
-import Vue from 'vue'
+import Vue from "vue";
 import store from "../store";
-import Router from 'vue-router'
-import TheHome from '@/views/TheHome'
-import TheLogin from '@/views/TheLogin'
-import NotFound from '@/views/NotFound'
+import Router from "vue-router";
+import TheHome from "@/views/TheHome";
+import TheLogin from "@/views/TheLogin";
+import NotFound from "@/views/NotFound";
+import TheLoading from "@/views/TheLoading";
 import JsBase from "@/components/jsbase/JsBase";
 
-const HelloWorld = () => import('@/components/HelloWorld');
+const HelloWorld = () => import("@/components/HelloWorld");
 const TheAbout = () => import("@/views/TheAbout");
 // js base
 const JsBase1 = () => import("@/components/jsbase/JsBase1");
+const JsBase2 = () => import("@/components/jsbase/JsBase2");
+const JsBase3 = () => import("@/components/jsbase/JsBase3");
 
 Vue.use(Router);
 
@@ -21,45 +24,60 @@ Vue.use(Router);
 const router = new Router({
   routes: [
     {
-      path: '/',
-      name: 'TheHome',
+      path: "/",
+      name: "TheHome",
       component: TheHome
     },
     {
-      path: '/login',
-      name: 'TheLogin',
+      path: "/login",
+      name: "TheLogin",
       component: TheLogin
     },
     {
-      path: '/jsBase',
+      path: "/jsBase",
       component: JsBase,
       children: [
         {
-          path: '/jsBase1',
-          name: 'JsBase1',
+          path: "/jsBase1",
+          name: "JsBase1",
           component: JsBase1
+        },
+        {
+          path: "/jsBase2",
+          name: "JsBase2",
+          component: JsBase2
+        },
+        {
+          path: "/jsBase3",
+          name: "JsBase3",
+          component: JsBase3
         }
       ]
     },
     {
-      path: '/about',
-      name: 'TheAbout',
+      path: "/about",
+      name: "TheAbout",
       component: TheAbout,
       meta: {
-        requireAuth: true// 添加该字段，表示进入这个路由是需要登录的
+        requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
       }
     },
     {
-      path: '/hello',
-      name: 'HelloWorld',
+      path: "/hello",
+      name: "HelloWorld",
       component: HelloWorld,
       meta: {
-        requireAuth: true// 添加该字段，表示进入这个路由是需要登录的
+        requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
       }
+    },
+    {
+      path: "/loading",
+      name: "TheLoading",
+      component: TheLoading
     },
     {
       path: "*",
-      name: 'NotFound',
+      name: "NotFound",
       component: NotFound
     }
   ]
@@ -72,12 +90,12 @@ router.beforeEach((to, from, next) => {
         query: {
           redirect: to.fullPath
         }
-      })
+      });
     } else {
       next();
     }
   } else {
-    next()
+    next();
   }
 });
-export default router
+export default router;

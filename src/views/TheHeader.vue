@@ -38,22 +38,31 @@ export default {
           child: null
         },
         {
-          name: "JS基础",
+          name: "JavaScript基础",
           id: "/jsBase",
           child: [
             {
-              name: "JavaScript 代码规范",
+              name: "JavaScript 用法1",
               id: "jsBase1"
             },
             {
-              name: "JS用法2",
+              name: "JavaScript 代码规范",
               id: "/jsBase2"
+            },
+            {
+              name: "JavaScript 函数",
+              id: "/jsBase3"
             }
           ]
         },
         {
           name: "HelloWorld",
           id: "/hello",
+          child: null
+        },
+        {
+          name: "TheLoading",
+          id: "/loading",
           child: null
         }
       ]
