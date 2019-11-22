@@ -2,7 +2,7 @@ module.exports = {
   // publicPath: process.env.NODE_ENV === 'production'
   //   ? '/my-project/'
   //   : './'
-  publicPath: './',//相对路径 ('./')这样打出来的包可以被部署在任意路径
+  publicPath: "./", //相对路径 ('./')这样打出来的包可以被部署在任意路径
   // // 公共代码抽离
   // configureWebpack: () => ({
   //   optimization: {
@@ -51,5 +51,5 @@ module.exports = {
   //   requireModuleExtension: false
   // },
   // productionSourceMap: false // 去除map文件
-  outputDir: 'docs'
-}
+  outputDir: "docs"
+};

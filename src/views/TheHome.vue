@@ -1,22 +1,113 @@
 <template>
-  <el-calendar v-model="value" class="my-calendar">
-    <template slot="dateCell" slot-scope="{date, data}">
-      <span
-        :class="data.isSelected ? 'is-selected' : ''"
-      >{{ data.day.split('-')[2]>9?data.day.split('-')[2]:data.day.split('-')[2].split('0')[1] }} {{ data.isSelected ? '✔️' : ''}}</span>
-    </template>
-  </el-calendar>
+  <div>
+    <div style="width:120px;height:100px;position:fixed;left:80px;top:150px;">
+      <div id="dig1" class="dig">1</div>
+      <div id="dig2" class="dig">2</div>
+      <div id="dig3" class="dig">3</div>
+      <div id="dig4" class="dig">4</div>
+      <div id="dig5" class="dig">5</div>
+      <div id="dig6" class="dig">6</div>
+      <div id="dig7" class="dig">7</div>
+      <div id="dig8" class="dig">8</div>
+      <div id="dig9" class="dig">9</div>
+      <div id="dig10" class="dig">10</div>
+      <div id="dig11" class="dig">11</div>
+      <div id="dig12" class="dig">12</div>
+
+      <div id="hour1" class="hour"></div>
+      <div id="hour2" class="hour"></div>
+      <div id="hour3" class="hour"></div>
+      <div id="hour4" class="hour"></div>
+
+      <div id="min1" class="min"></div>
+      <div id="min2" class="min"></div>
+      <div id="min3" class="min"></div>
+      <div id="min4" class="min"></div>
+      <div id="min5" class="min"></div>
+
+      <div id="sec1" class="sec"></div>
+      <div id="sec2" class="sec"></div>
+      <div id="sec3" class="sec"></div>
+      <div id="sec4" class="sec"></div>
+      <div id="sec5" class="sec"></div>
+      <div id="sec6" class="sec"></div>
+    </div>
+    <el-calendar v-model="value" class="my-calendar">
+      <template slot="dateCell" slot-scope="{ date, data }">
+        <span :class="data.isSelected ? 'is-selected' : ''">
+          {{ data.day.split("-")[2] > 9 ? data.day.split("-")[2] : data.day.split("-")[2].split("0")[1] }}
+          {{ data.isSelected ? "✔️" : "" }}
+        </span>
+      </template>
+    </el-calendar>
+  </div>
 </template>
 
 <script>
+import { setInterval } from "timers";
+
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld'
+
 export default {
   name: "TheHome",
   data() {
     return {
-      value: new Date()
+      value: new Date(),
+      clock: null
     };
+  },
+  methods: {
+    setClock() {
+      var Ypos = 0;
+      var Xpos = 0;
+      var Ybase = 8;
+      var Xbase = 8;
+      var dots = 12;
+      var time = new Date();
+      var secs = time.getSeconds();
+      var sec = (Math.PI * secs) / 30 - 1.57;
+      var mins = time.getMinutes();
+      var min = (Math.PI * mins) / 30 - 1.57;
+      var hr = time.getHours();
+      console.log(hr + ":" + mins + ":" + secs);
+      var hrs = (Math.PI * hr) / 6 + (Math.PI * parseInt(time.getMinutes())) / 360 - 1.57;
+      for (let i = 0; i < dots; ++i) {
+        const digEle = document.getElementById("dig" + (i + 1));
+        digEle.style.top = 0 - 15 + 40 * Math.sin(-0.49 + dots + i / 1.9).toString() + "px";
+        digEle.style.left = 0 - 14 + 40 * Math.cos(-0.49 + dots + i / 1.9).toString() + "px";
+      }
+      for (let i = 0; i < 4; i++) {
+        const hourEle = document.getElementById("hour" + (i + 1));
+        hourEle.style.top = Ypos + i * Ybase * Math.sin(hrs).toString() + "px";
+        hourEle.style.left = Xpos + i * Xbase * Math.cos(hrs).toString() + "px";
+      }
+      for (let i = 0; i < 5; i++) {
+        const minEle = document.getElementById("min" + (i + 1));
+        minEle.style.top = Ypos + i * Ybase * Math.sin(min).toString() + "px";
+        minEle.style.left = Xpos + i * Xbase * Math.cos(min).toString() + "px";
+      }
+      for (let i = 0; i < 6; i++) {
+        const secEle = document.getElementById("sec" + (i + 1));
+        secEle.style.top = Ypos + i * Ybase * Math.sin(sec).toString() + "px";
+        secEle.style.left = Xpos + i * Xbase * Math.cos(sec).toString() + "px";
+      }
+    }
+  },
+  mounted() {
+    const that = this;
+    if (that.clock) {
+      clearInterval(that.clock);
+    }
+    that.clock = setInterval(function() {
+      that.setClock();
+    }, 50);
+  },
+  destroyed() {
+    if (this.clock) {
+      clearInterval(this.clock);
+      this.clock = null;
+    }
   }
 };
 </script>
@@ -31,5 +122,37 @@ export default {
 }
 .my-calendar .is-selected {
   color: #1989fa;
+}
+/* kpkkk */
+div.dig,
+div.hour,
+div.min,
+div.sec {
+  position: absolute;
+}
+div.hour,
+div.min,
+div.sec {
+  width: 2px;
+  height: 2px;
+  font-size: 2px;
+}
+div.dig {
+  width: 30px;
+  height: 30px;
+  font-family: arial, verdana, sans-serif;
+  font-size: 10px;
+  color: #000000;
+  text-align: center;
+  padding-top: 10px;
+}
+div.min {
+  background: #0000ff;
+}
+div.hour {
+  background: #000000;
+}
+div.sec {
+  background: #ff0000;
 }
 </style>

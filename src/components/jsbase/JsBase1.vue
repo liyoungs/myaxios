@@ -42,7 +42,8 @@
         <p>变量用来存储数据值。变量是用于存储信息的"容器"。</p>
         <p>
           JavaScript使用关键字
-          <strong>var</strong>来定义变量使用等号（=）来为变量赋值
+          <strong>var</strong>
+          来定义变量使用等号（=）来为变量赋值
         </p>
         <el-alert
           title="JavaScript 中，常见的是驼峰法的命名规则，如 lastName"
@@ -54,18 +55,28 @@
       </el-collapse-item>
       <el-collapse-item name="3" title="JavaScript 数据类型📌">
         <p>
-          <b>值类型(基本类型)：</b>字符串（String）、数字(Number)、布尔(Boolean)、对空（Null）、未定义（Undefined）、Symbol
+          <b>值类型(基本类型)：</b>
+          字符串（String）、数字(Number)、布尔(Boolean)、对空（Null）、未定义（Undefined）、Symbol
         </p>
         <p>
-          <b>引用数据类型：</b>对象(Object)、数组(Array)、函数(Function)。
+          <b>引用数据类型：</b>
+          对象(Object)、数组(Array)、函数(Function)。
         </p>
-        <el-alert title="Symbol 是 ES6 引入了一种新的原始数据类型，表示独一无二的值。" show-icon :closable="false"></el-alert>
+        <el-alert
+          title="Symbol 是 ES6 引入了一种新的原始数据类型，表示独一无二的值。"
+          show-icon
+          :closable="false"
+        ></el-alert>
         <p>JavaScript 变量均为对象。当您声明一个变量时，就创建了一个新的对象。</p>
         <el-alert :closable="false" title="测试对象是否存在" show-icon></el-alert>
         <code>if(typeof myObj !== "undefined" && myObj !== null)</code>
       </el-collapse-item>
       <el-collapse-item title="JavaScript 函数" name="4">
-        <el-alert title="函数是由事件驱动的或者当它被调用时执行的可重复使用的代码块。" :closable="false" show-icon></el-alert>
+        <el-alert
+          title="函数是由事件驱动的或者当它被调用时执行的可重复使用的代码块。"
+          :closable="false"
+          show-icon
+        ></el-alert>
         <p>变量在es6之前只有全局变量和局部变量，也就是说变量的作用域是全局或者局部（函数内）</p>
         <mark>es6添加了:let,const来声明变量。增加了块级作用域（{}）的概念，类似一个局部的概念</mark>
       </el-collapse-item>
@@ -91,8 +102,7 @@ export default {
     return {
       activeName: "3",
       msg: "JavaScript 再充电！！！",
-      msg1:
-        "在编程语言中，一般固定值称为字面量，如 3.14。有数字、字符串、表达式、数组、对象、函数字面量",
+      msg1: "在编程语言中，一般固定值称为字面量，如 3.14。有数字、字符串、表达式、数组、对象、函数字面量",
       tip1: "🚦👀变量是一个名称，字面量是一个值🚦",
       h2Msg: "这是一个测试🛰   <b>你好</b> 🛰"
     };

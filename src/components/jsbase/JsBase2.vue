@@ -52,15 +52,18 @@
       <ul>
         <li>
           变量和函数为小驼峰法标识, 即除第一个单词之外，其他单词首字母大写（
-          <b>lowerCamelCase</b>）
+          <b>lowerCamelCase</b>
+          ）
         </li>
         <li>
           全局变量为大写 (
-          <b>UPPERCASE</b> )
+          <b>UPPERCASE</b>
+          )
         </li>
         <li>
           常量 (如 PI) 为大写 (
-          <b>UPPERCASE</b> )
+          <b>UPPERCASE</b>
+          )
         </li>
       </ul>
     </el-card>
@@ -84,5 +87,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

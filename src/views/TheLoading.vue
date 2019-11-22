@@ -19,8 +19,7 @@ export default {
   created() {
     const UA = window.navigator.userAgent;
     if (UA.toLowerCase().indexOf("msie 9.0") > -1) {
-      this.ua =
-        "Internet Explorer 9以及更早的版本不支持 @keyframe 规则或 animation 属性";
+      this.ua = "Internet Explorer 9以及更早的版本不支持 @keyframe 规则或 animation 属性";
     }
   }
 };

@@ -1,12 +1,12 @@
-import Vue from "vue"
-import Vuex from "vuex"
-import PersistedState from "vuex-persistedstate"
+import Vue from "vue";
+import Vuex from "vuex";
+import PersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 const state = {
   // AUTH_TOKEN: "aksddkdm"
   AUTH_TOKEN: null,
-  activeIndex: '/'
+  activeIndex: "/"
 };
 const mutations = {
   setActiveIndex(state, newValue) {
@@ -26,4 +26,4 @@ const store = new Vuex.Store({
   actions,
   plugins: [PersistedState({ storage: window.sessionStorage })]
 });
-export default store
+export default store;

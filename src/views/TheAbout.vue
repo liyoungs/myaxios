@@ -6,7 +6,7 @@
       row-key="id"
       border
       default-expand-all
-      :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
+      :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
     >
       <el-table-column prop="date" label="日期" sortable width="180"></el-table-column>
       <el-table-column prop="name" label="姓名" sortable width="180"></el-table-column>
@@ -20,7 +20,7 @@
       border
       lazy
       :load="load"
-      :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
+      :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
     >
       <el-table-column prop="date" label="日期" width="180"></el-table-column>
       <el-table-column prop="name" label="姓名" width="180"></el-table-column>
@@ -126,5 +126,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

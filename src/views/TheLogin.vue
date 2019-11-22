@@ -1,12 +1,5 @@
 <template>
-  <el-form
-    status-icon
-    :model="myData"
-    :rules="myRules"
-    ref="myForm"
-    label-width="100px"
-    class="myForm"
-  >
+  <el-form status-icon :model="myData" :rules="myRules" ref="myForm" label-width="100px" class="myForm">
     <el-form-item label="密码" prop="pass">
       <el-input v-model="myData.pass" autocomplete="off" type="password"></el-input>
     </el-form-item>
@@ -98,9 +91,7 @@ export default {
                   that.$store.commit("setToken", res.data.token);
                 }
                 console.log(that.$route);
-                const redirectUrl = decodeURIComponent(
-                  that.$route.query.redirect || "/"
-                );
+                const redirectUrl = decodeURIComponent(that.$route.query.redirect || "/");
                 console.log(redirectUrl);
                 that.$store.commit("setActiveIndex", redirectUrl);
                 that.$router.push(redirectUrl);
