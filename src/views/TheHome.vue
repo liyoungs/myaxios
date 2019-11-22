@@ -44,8 +44,6 @@
 </template>
 
 <script>
-import { setInterval } from "timers";
-
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld'
 
@@ -54,7 +52,7 @@ export default {
   data() {
     return {
       value: new Date(),
-      clock: null
+      myTimer: null
     };
   },
   methods: {
@@ -70,7 +68,6 @@ export default {
       var mins = time.getMinutes();
       var min = (Math.PI * mins) / 30 - 1.57;
       var hr = time.getHours();
-      console.log(hr + ":" + mins + ":" + secs);
       var hrs = (Math.PI * hr) / 6 + (Math.PI * parseInt(time.getMinutes())) / 360 - 1.57;
       for (let i = 0; i < dots; ++i) {
         const digEle = document.getElementById("dig" + (i + 1));
@@ -94,19 +91,17 @@ export default {
       }
     }
   },
-  mounted() {
+  created() {
     const that = this;
-    if (that.clock) {
-      clearInterval(that.clock);
+    if (that.myTimer) {
+      window.clearInterval(that.myTimer);
     }
-    that.clock = setInterval(function() {
-      that.setClock();
-    }, 50);
+    that.myTimer = window.setInterval(that.setClock, 1000);
   },
   destroyed() {
-    if (this.clock) {
-      clearInterval(this.clock);
-      this.clock = null;
+    if (this.myTimer) {
+      window.clearInterval(this.myTimer);
+      this.myTimer = null;
     }
   }
 };
