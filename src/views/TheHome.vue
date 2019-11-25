@@ -1,6 +1,12 @@
 <template>
   <div>
-    <div style="width:120px;height:100px;position:fixed;left:80px;top:150px;">
+    <div
+      style="width:120px;height:120px;position:fixed;left:80px;top:150px;"
+      v-loading="loading"
+      element-loading-spinner="el-icon-loading"
+      element-loading-text="拼命加载中"
+      element-loading-background="rgba(0, 0, 0, 0.8)"
+    >
       <div id="dig1" class="dig">1</div>
       <div id="dig2" class="dig">2</div>
       <div id="dig3" class="dig">3</div>
@@ -32,6 +38,7 @@
       <div id="sec5" class="sec"></div>
       <div id="sec6" class="sec"></div>
     </div>
+    <el-tag>{{ myClock }}</el-tag>
     <el-calendar v-model="value" class="my-calendar">
       <template slot="dateCell" slot-scope="{ date, data }">
         <span :class="data.isSelected ? 'is-selected' : ''">
@@ -52,13 +59,31 @@ export default {
   data() {
     return {
       value: new Date(),
-      myTimer: null
+      myTimer: null,
+      loading: true,
+      myClock: null
     };
   },
   methods: {
+    checkTime(n) {
+      if (n < 10) {
+        n = "0" + n;
+      }
+      return n;
+    },
+    setTimeoutClock() {
+      const TODAY = new Date();
+      const HH = this.checkTime(TODAY.getHours());
+      const MM = this.checkTime(TODAY.getMinutes());
+      const SS = this.checkTime(TODAY.getSeconds());
+      this.myClock = HH + "：" + MM + "：" + SS;
+      setTimeout(() => {
+        this.setTimeoutClock();
+      }, 500);
+    },
     setClock() {
-      var Ypos = 0;
-      var Xpos = 0;
+      var Ypos = 60;
+      var Xpos = 60;
       var Ybase = 8;
       var Xbase = 8;
       var dots = 12;
@@ -71,8 +96,8 @@ export default {
       var hrs = (Math.PI * hr) / 6 + (Math.PI * parseInt(time.getMinutes())) / 360 - 1.57;
       for (let i = 0; i < dots; ++i) {
         const digEle = document.getElementById("dig" + (i + 1));
-        digEle.style.top = 0 - 15 + 40 * Math.sin(-0.49 + dots + i / 1.9).toString() + "px";
-        digEle.style.left = 0 - 14 + 40 * Math.cos(-0.49 + dots + i / 1.9).toString() + "px";
+        digEle.style.top = 60 - 15 + 40 * Math.sin(-0.49 + dots + i / 1.9).toString() + "px";
+        digEle.style.left = 60 - 14 + 40 * Math.cos(-0.49 + dots + i / 1.9).toString() + "px";
       }
       for (let i = 0; i < 4; i++) {
         const hourEle = document.getElementById("hour" + (i + 1));
@@ -89,10 +114,14 @@ export default {
         secEle.style.top = Ypos + i * Ybase * Math.sin(sec).toString() + "px";
         secEle.style.left = Xpos + i * Xbase * Math.cos(sec).toString() + "px";
       }
+      if (this.loading) {
+        this.loading = false;
+      }
     }
   },
   created() {
     const that = this;
+    this.setTimeoutClock();
     if (that.myTimer) {
       window.clearInterval(that.myTimer);
     }
@@ -124,6 +153,8 @@ div.hour,
 div.min,
 div.sec {
   position: absolute;
+  left: 60px;
+  top: 60px;
 }
 div.hour,
 div.min,

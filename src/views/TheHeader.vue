@@ -17,7 +17,6 @@
         </el-submenu>
       </template>
     </el-menu>
-    <!--    <HelloWorld msg="prop test"></HelloWorld>-->
   </div>
 </template>
 
@@ -50,6 +49,16 @@ export default {
             {
               name: "JavaScript 函数",
               id: "/jsBase3"
+            }
+          ]
+        },
+        {
+          name: "JavaScript高级",
+          id: "/jsBaseh",
+          child: [
+            {
+              name: "JavaScript 对象",
+              id: "jsBaseHigher1"
             }
           ]
         },
@@ -96,5 +105,3 @@ export default {
   }
 };
 </script>
-
-<style scoped></style>

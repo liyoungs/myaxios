@@ -13,6 +13,8 @@ const TheAbout = () => import("@/views/TheAbout");
 const JsBase1 = () => import("@/components/jsbase/JsBase1");
 const JsBase2 = () => import("@/components/jsbase/JsBase2");
 const JsBase3 = () => import("@/components/jsbase/JsBase3");
+// js higher
+const JsBaseHigher1 = () => import("@/components/jsbase/JsBaseHigher1");
 
 Vue.use(Router);
 
@@ -36,6 +38,7 @@ const router = new Router({
     {
       path: "/jsBase",
       component: JsBase,
+      alias: "/jsBaseh",
       children: [
         {
           path: "/jsBase1",
@@ -51,6 +54,17 @@ const router = new Router({
           path: "/jsBase3",
           name: "JsBase3",
           component: JsBase3
+        }
+      ]
+    },
+    {
+      path: "/jsBase",
+      component: JsBase,
+      children: [
+        {
+          path: "/jsBaseHigher1",
+          name: "JsBaseHigher1",
+          component: JsBaseHigher1
         }
       ]
     },
