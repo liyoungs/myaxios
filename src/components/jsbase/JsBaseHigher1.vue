@@ -96,19 +96,9 @@ export default {
   },
   created() {
     console.log("created");
-    console.log(this.myFunc());
-    const myObject = {
-      firstName: "John",
-      lastName: "Doe",
-      fullName: function() {
-        return this;
-      }
-    };
-    console.log(myObject.fullName());
   },
   mounted() {
     console.log("mounted");
-    console.log(window.location);
   }
 };
 </script>

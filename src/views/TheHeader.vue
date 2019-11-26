@@ -59,6 +59,10 @@ export default {
             {
               name: "JavaScript 对象",
               id: "jsBaseHigher1"
+            },
+            {
+              name: "JavaScript Cookie",
+              id: "/jsBaseHigher2"
             }
           ]
         },
