@@ -81,6 +81,12 @@ export default {
         this.setTimeoutClock();
       }, 500);
     },
+    startClock() {
+      this.setClock();
+      this.myTimer = setTimeout(() => {
+        this.startClock();
+      }, 1000);
+    },
     setClock() {
       var Ypos = 60;
       var Xpos = 60;
@@ -119,17 +125,17 @@ export default {
       }
     }
   },
-  created() {
+  mounted() {
     const that = this;
     this.setTimeoutClock();
     if (that.myTimer) {
-      window.clearInterval(that.myTimer);
+      window.clearTimeout(that.myTimer);
     }
-    that.myTimer = window.setInterval(that.setClock, 1000);
+    this.startClock();
   },
   destroyed() {
     if (this.myTimer) {
-      window.clearInterval(this.myTimer);
+      window.clearTimeout(this.myTimer);
       this.myTimer = null;
     }
   }

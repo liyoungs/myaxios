@@ -5,33 +5,46 @@
       Cookie 以名/值对形式存储(username=John Doe)当浏览器从服务器上请求 web 页面时， 属于该页面的 cookie
       会被添加到该请求中。服务端通过这种方式来获取用户的信息。
     </el-tag>
-    <div class="jisuanqi-wrapper">
-      <h2 style="text-algin:center;">HTML CSS, JavaScript 计算器</h2>
-      <div class="jisuanqi">
-        <input type="button" value="C" class="btn other" @click="clearV" />
-        <input type="text" id="display" v-model="result" />
-        <br />
-        <input type="button" value="7" class="btn number" @click="getV($event)" />
-        <input type="button" value="8" class="btn number" @click="getV($event)" />
-        <input type="button" value="9" class="btn number" @click="getV($event)" />
-        <input type="button" value="+" class="btn other" @click="getV($event)" />
-        <br />
-        <input type="button" value="4" class="btn number" @click="getV($event)" />
-        <input type="button" value="5" class="btn number" @click="getV($event)" />
-        <input type="button" value="6" class="btn number" @click="getV($event)" />
-        <input type="button" value="*" class="btn other" @click="getV($event)" />
-        <br />
-        <input type="button" value="1" class="btn number" @click="getV($event)" />
-        <input type="button" value="2" class="btn number" @click="getV($event)" />
-        <input type="button" value="3" class="btn number" @click="getV($event)" />
-        <input type="button" value="-" class="btn other" @click="getV($event)" />
-        <br />
-        <input type="button" value="0" class="btn number" @click="getV($event)" />
-        <input type="button" value="." class="btn other" @click="getV($event)" />
-        <input type="button" value="/" class="btn other" @click="getV($event)" />
-        <input type="button" value="=" class="btn other" @click="calculates" />
+    <el-card class="wrap">
+      <el-tag slot="header">计时器 timout</el-tag>
+      <el-row :gutter="20">
+        <el-col :span="4" class="tr">
+          <el-button @click="startTimer">开始</el-button>
+        </el-col>
+        <el-col :span="16">
+          <el-input v-model="result" placeholder="result" readonly></el-input>
+        </el-col>
+        <el-col :span="4">
+          <el-button @click="stopTimer">停止</el-button>
+        </el-col>
+      </el-row>
+    </el-card>
+    <el-card class="wrap">
+      <div class="slide-wrap">
+        <ul class="slide">
+          <li
+            class="slide-item"
+            v-for="(item, index) in imgArr"
+            :key="index"
+            :class="index === slideInd ? 'active' : ''"
+          >
+            <img :src="item" alt="" />
+            <div class="txt">@/assets/pic{{ index + 1 }}.png</div>
+          </li>
+        </ul>
+        <ul class="indicator-wrap">
+          <li
+            class="indicator"
+            v-for="val in imgArr.length"
+            :key="val"
+            @click="currentSlide(val)"
+            :class="val === indicatorInd ? 'active' : ''"
+          >
+            <span class="indicator-item"></span>
+          </li>
+        </ul>
       </div>
-    </div>
+    </el-card>
   </div>
 </template>
 
@@ -40,25 +53,20 @@ export default {
   name: "JsBaseHigher1",
   data() {
     return {
-      result: 0
+      result: 0,
+      timer: null,
+      timer_is_on: false,
+      indicatorInd: 1,
+      slideInd: 0,
+      imgArr: [
+        require("@/assets/pic1.png"),
+        require("@/assets/pic2.png"),
+        require("@/assets/pic3.png"),
+        require("@/assets/pic4.png")
+      ]
     };
   },
   methods: {
-    clearV() {
-      this.result = 0;
-    },
-    getV(evt) {
-      if (this.result === 0) {
-        this.result = "";
-      }
-      this.result += evt.target.value;
-      // console.log(evt.target.value);
-    },
-    calculates() {
-      const str = this.result;
-      setTimeout(str, 0);
-      // console.log(func());
-    },
     setCookie(cname, cvakue, exday) {
       const d = new Date();
       exday = exday || 1;
@@ -87,6 +95,68 @@ export default {
           document.cookie = element.split("=")[0] + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
         });
       }
+    },
+    myTimer() {
+      this.result++;
+      this.timer = setTimeout(this.myTimer, 1000);
+    },
+    startTimer() {
+      if (!this.timer_is_on) {
+        this.timer_is_on = true;
+        if (this.timer) {
+          window.clearTimeout(this.timer);
+        }
+        this.myTimer();
+      }
+    },
+    stopTimer() {
+      if (this.timer) {
+        window.clearTimeout(this.timer);
+        this.timer_is_on = false;
+
+        this.$confirm("已停止计时器。是否清零重新开始?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            if (this.result === 0) {
+              this.$message({
+                type: "success",
+                message: "已清零!"
+              });
+            } else {
+              this.result = 0;
+              this.$message({
+                type: "success",
+                message: "清零成功!"
+              });
+            }
+          })
+          .catch(() => {
+            this.$message({
+              type: "info",
+              message: "已取消"
+            });
+          });
+      }
+    },
+    currentSlide(val) {
+      console.log(val);
+      this.indicatorInd = val;
+      this.slideInd = val - 1;
+    },
+    autoSlide() {
+      const len = this.imgArr.length;
+      this.indicatorInd++;
+      this.slideInd++;
+      if (this.indicatorInd > len) {
+        this.indicatorInd = 1;
+      }
+      if (this.slideInd + 1 > len) {
+        this.slideInd = 0;
+      }
+      setTimeout(this.autoSlide, 1500);
     }
   },
   created() {
@@ -100,93 +170,72 @@ export default {
   },
   mounted() {
     console.log("mounted");
+    this.autoSlide();
     // console.log(jq.fn.jquery);
   }
 };
 </script>
 <style scoped>
-.jisuanqi-wrapper {
-  background-color: #fff;
-  border-radius: 50%;
-  /* height: 600px; */
-  margin: auto;
-  width: 600px;
+.wrap {
+  width: 560px;
+  margin: 10px auto;
+  text-align: center;
 }
-.jisuanqi-wrapper * {
-  border: none;
-  font-family: "Open Sans", sans-serif;
+.tr {
+  text-align: right;
+}
+.slide-wrap {
+  width: 140px;
+  margin: auto;
+  line-height: 1;
+}
+.slide-wrap ul,
+.slide-wrap li {
   margin: 0;
+  list-style: none;
   padding: 0;
 }
-.jisuanqi {
-  background-color: #495678;
-  box-shadow: 4px 4px #3d4a65;
-  margin: 10px auto 0;
-  padding: 40px 0 30px 40px;
-  width: 280px;
+.slide {
+  width: 140px;
+  height: 60px;
+  overflow: hidden;
+  position: relative;
 }
-.btn {
-  outline: none;
+.slide-item {
+  width: 140px;
+  height: 60px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+}
+.slide-item .txt {
+  position: absolute;
+  bottom: 6px;
+  left: 0;
+  right: 0;
+  font-size: 12px;
+}
+.slide-item.active {
+  display: block;
+}
+.indicator-wrap {
+  font-size: 0;
+}
+.indicator-wrap .indicator {
+  background: transparent;
+  display: inline-block;
+  padding: 12px 6px;
   cursor: pointer;
-  font-size: 20px;
-  height: 45px;
-  margin: 5px 0 5px 10px;
-  width: 45px;
 }
-.btn:first-child {
-  margin: 5px 0 5px 10px;
+.indicator-item {
+  display: inline-block;
+  background: #b3d8ff;
+  width: 20px;
+  height: 2px;
+  font-size: 12px;
 }
-.btn,
-#display,
-.jisuanqi {
-  border-radius: 25px;
-}
-#display {
-  outline: none;
-  background-color: #98d1dc;
-  box-shadow: inset 6px 6px 0px #3facc0;
-  color: #dededc;
-  font-size: 20px;
-  height: 47px;
-  text-align: right;
-  width: 165px;
-  padding-right: 10px;
-  margin-left: 10px;
-}
-.number {
-  background-color: #72778b;
-  box-shadow: 0 5px #5f6680;
-  color: #dededc;
-}
-.number:active {
-  box-shadow: 0 2px #5f6680;
-  -webkit-transform: translateY(2px);
-  -ms-transform: translateY(2px);
-  -moz-tranform: translateY(2px);
-  transform: translateY(2px);
-}
-.operator {
-  background-color: #dededc;
-  box-shadow: 0 5px #bebebe;
-  color: #72778b;
-}
-.operator:active {
-  box-shadow: 0 2px #bebebe;
-  -webkit-transform: translateY(2px);
-  -ms-transform: translateY(2px);
-  -moz-tranform: translateY(2px);
-  transform: translateY(2px);
-}
-.other {
-  background-color: #e3844c;
-  box-shadow: 0 5px #e76a3d;
-  color: #dededc;
-}
-.other:active {
-  box-shadow: 0 2px #e76a3d;
-  -webkit-transform: translateY(2px);
-  -ms-transform: translateY(2px);
-  -moz-tranform: translateY(2px);
-  transform: translateY(2px);
+.indicator.active .indicator-item {
+  background: #409eff;
 }
 </style>
