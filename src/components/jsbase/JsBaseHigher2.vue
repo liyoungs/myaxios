@@ -21,22 +21,42 @@
     </el-card>
     <el-card class="wrap">
       <div class="slide-wrap">
-        <ul class="slide">
-          <li
-            class="slide-item"
-            v-for="(item, index) in imgArr"
-            :key="index"
-            :class="index === slideInd ? 'active' : ''"
-          >
-            <img :src="item" alt="" />
-            <div class="txt">@/assets/pic{{ index + 1 }}.png</div>
-          </li>
-        </ul>
+        <div class="slide-container">
+          <ul class="slide">
+            <li
+              class="slide-item fade"
+              v-for="(item, index) in imgArr"
+              :key="'index' + index"
+              :class="index === slideInd ? 'active' : ''"
+            >
+              <img :src="item" alt="" />
+              <div class="txt">@/assets/pic{{ index + 1 }}.png</div>
+            </li>
+          </ul>
+          <el-button
+            type="primary"
+            class="arrow-left"
+            icon="el-icon-arrow-left"
+            @click="leftSlide"
+            size="mini"
+            circle
+            plain
+          ></el-button>
+          <el-button
+            type="primary"
+            class="arrow-right"
+            icon="el-icon-arrow-right"
+            @click="rightSlide"
+            size="mini"
+            circle
+            plain
+          ></el-button>
+        </div>
         <ul class="indicator-wrap">
           <li
             class="indicator"
             v-for="val in imgArr.length"
-            :key="val"
+            :key="'val' + val"
             @click="currentSlide(val)"
             :class="val === indicatorInd ? 'active' : ''"
           >
@@ -45,6 +65,45 @@
         </ul>
       </div>
     </el-card>
+    <h2>自制日历</h2>
+    <el-card class="calendar">
+      <el-row :gutter="20" slot="header">
+        <el-col :span="4">
+          <el-button
+            type="primary"
+            icon="el-icon-arrow-left"
+            @click="leftMonth"
+            size="mini"
+            circle
+            plain
+          ></el-button>
+        </el-col>
+        <el-col :span="16" class="tc">{{ today.getFullYear() }}年{{ today.getMonth() + 1 }}月</el-col>
+        <el-col :span="4" class="tr">
+          <el-button
+            type="primary"
+            icon="el-icon-arrow-right"
+            @click="rightMonth"
+            size="mini"
+            circle
+            plain
+          ></el-button>
+        </el-col>
+      </el-row>
+      <div v-for="week in weekday" :key="week" class="calendar-cell">{{ week }}</div>
+      <template v-if="monthSize.week">
+        <div v-for="w in monthSize.week" :key="'w' + w" class="calendar-cell"></div>
+      </template>
+      <div
+        v-for="item in monthSize.cur"
+        :key="item"
+        class="calendar-cell"
+        :class="item === currentDay ? 'active' : ''"
+      >
+        <el-button size="mini" circle>{{ item }}</el-button>
+      </div>
+    </el-card>
+    <h2>{{ today.toLocaleString() }}自制日历 {{ monthSize }}</h2>
   </div>
 </template>
 
@@ -56,6 +115,7 @@ export default {
       result: 0,
       timer: null,
       timer_is_on: false,
+      timerSlide: null,
       indicatorInd: 1,
       slideInd: 0,
       imgArr: [
@@ -63,6 +123,23 @@ export default {
         require("@/assets/pic2.png"),
         require("@/assets/pic3.png"),
         require("@/assets/pic4.png")
+      ],
+      today: new Date(),
+      currentDay: new Date().getDate(),
+      weekday: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
+      month: [
+        "一月",
+        "二月",
+        "三月",
+        "四月",
+        "五月",
+        "六月",
+        "七月",
+        "八月",
+        "九月",
+        "十月",
+        "十一月",
+        "十二月"
       ]
     };
   },
@@ -142,11 +219,19 @@ export default {
       }
     },
     currentSlide(val) {
-      console.log(val);
+      if (this.timerSlide) {
+        clearTimeout(this.timerSlide);
+        this.timerSlide = null;
+      }
       this.indicatorInd = val;
       this.slideInd = val - 1;
+      this.timerSlide = setTimeout(this.autoSlide, 5000);
     },
     autoSlide() {
+      if (this.timerSlide) {
+        clearTimeout(this.timerSlide);
+        this.timerSlide = null;
+      }
       const len = this.imgArr.length;
       this.indicatorInd++;
       this.slideInd++;
@@ -156,7 +241,82 @@ export default {
       if (this.slideInd + 1 > len) {
         this.slideInd = 0;
       }
-      setTimeout(this.autoSlide, 1500);
+      this.timerSlide = setTimeout(this.autoSlide, 1500);
+    },
+    rightSlide() {
+      if (this.timerSlide) {
+        clearTimeout(this.timerSlide);
+        this.timerSlide = null;
+      }
+      const len = this.imgArr.length;
+      this.indicatorInd++;
+      this.slideInd++;
+      if (this.indicatorInd > len) {
+        this.indicatorInd = 1;
+      }
+      if (this.slideInd + 1 > len) {
+        this.slideInd = 0;
+      }
+      this.timerSlide = setTimeout(this.autoSlide, 5000);
+    },
+    leftSlide() {
+      if (this.timerSlide) {
+        clearTimeout(this.timerSlide);
+        this.timerSlide = null;
+      }
+      const len = this.imgArr.length;
+      this.indicatorInd--;
+      this.slideInd--;
+      if (this.indicatorInd < 1) {
+        this.indicatorInd = len;
+      }
+      if (this.slideInd < 0) {
+        this.slideInd = len - 1;
+      }
+      this.timerSlide = setTimeout(this.autoSlide, 5000);
+    },
+    monthSize1() {
+      const size = {};
+      // const TD = this.today;
+      const TD = new Date();
+      const MM = TD.getMonth(); // 获取当前月份/** 0 ~ 11 */
+      TD.setMonth(MM + 1); // 设置月份 为当前月的下一个月
+      TD.setDate(0); // 设置一个月中的某一天/**0 为一个月的最后一天 */
+      size.cur = TD.getDate(); // 当前月的总天数
+      TD.setFullYear(TD.getFullYear(), MM, 1); // 设置日期  为当前月的第一天
+      size.week = TD.getDay(); // 当前月的第一天星期几
+      // size.week = TD.getDay() - 1; // 当前月的 上一个月 最后一天 星期几
+      if (size.week < 1) {
+        size.week = null;
+      }
+      return size;
+    },
+    rightMonth() {
+      const TD = this.today;
+      const MM = TD.getMonth(); // 获取当前月份/** 0 ~ 11 */
+      TD.setMonth(MM + 1); // 设置月份 为当前月的下一个月
+    },
+    leftMonth() {
+      const TD = this.today;
+      const MM = TD.getMonth(); // 获取当前月份/** 0 ~ 11 */
+      TD.setMonth(MM - 1); // 设置月份 为当前月的上一个月
+    }
+  },
+  computed: {
+    monthSize() {
+      const size = {};
+      const TD = this.today;
+      const MM = TD.getMonth(); // 获取当前月份/** 0 ~ 11 */
+      TD.setMonth(MM + 1); // 设置月份 为当前月的下一个月
+      TD.setDate(0); // 设置一个月中的某一天/**0 为一个月的最后一天 */
+      size.cur = TD.getDate(); // 当前月的总天数
+      TD.setFullYear(TD.getFullYear(), MM, 1); // 设置日期  为当前月的第一天
+      size.week = TD.getDay(); // 当前月的第一天星期几
+      // size.week = TD.getDay() - 1; // 当前月的 上一个月 最后一天 星期几
+      if (size.week < 1) {
+        size.week = null;
+      }
+      return size;
     }
   },
   created() {
@@ -171,7 +331,10 @@ export default {
   mounted() {
     console.log("mounted");
     this.autoSlide();
-    // console.log(jq.fn.jquery);
+    console.log("var d = new Date(year, month, day, hours, minutes, seconds, milliseconds);");
+    console.log(this.today.toLocaleString());
+    console.log(new Date().toLocaleString());
+    console.log("var d = new Date(year, month, day, hours, minutes, seconds, milliseconds);");
   }
 };
 </script>
@@ -184,10 +347,18 @@ export default {
 .tr {
   text-align: right;
 }
-.slide-wrap {
+.tc {
+  text-align: center;
+}
+.slide-wrap,
+.slide-container {
   width: 140px;
   margin: auto;
   line-height: 1;
+  position: relative;
+}
+.slide-container {
+  height: 60px;
 }
 .slide-wrap ul,
 .slide-wrap li {
@@ -237,5 +408,59 @@ export default {
 }
 .indicator.active .indicator-item {
   background: #409eff;
+}
+.arrow-left,
+.arrow-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  height: 20px;
+  padding: 0 4px;
+  border: none;
+}
+.arrow-right {
+  right: 0;
+}
+.arrow-left {
+  left: 0;
+}
+/* 淡出动画 */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.calendar {
+  width: 506px;
+  margin: auto;
+  overflow: hidden;
+}
+.calendar-cell {
+  display: inline-block;
+  width: 70px;
+  padding-bottom: 10px;
+}
+.calendar-cell:nth-child(7n) {
+  margin-right: -24px;
+}
+.calendar-cell .el-button {
+  width: 46px;
+  height: 46px;
+}
+.calendar-cell.active .el-button {
+  color: #3a8ee6;
+  border-color: #3a8ee6;
+  background-color: #ecf5ff;
 }
 </style>
