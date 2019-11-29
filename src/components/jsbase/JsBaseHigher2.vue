@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="padding-bottom:30px">
     <h1 style="text-algin:center;">Cookie 用于存储 web 页面的用户信息。</h1>
     <el-tag>
       Cookie 以名/值对形式存储(username=John Doe)当浏览器从服务器上请求 web 页面时， 属于该页面的 cookie
@@ -103,13 +103,12 @@
         <el-button size="mini" circle>{{ item }}</el-button>
       </div>
     </el-card>
-    <h2>{{ today.toLocaleString() }}自制日历 {{ monthSize }}</h2>
   </div>
 </template>
 
 <script>
 export default {
-  name: "JsBaseHigher1",
+  name: "JsBaseHigher2",
   data() {
     return {
       result: 0,
@@ -124,7 +123,8 @@ export default {
         require("@/assets/pic3.png"),
         require("@/assets/pic4.png")
       ],
-      today: new Date(),
+      today: null,
+      monthSize: { cur: null, week: null },
       currentDay: new Date().getDate(),
       weekday: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
       month: [
@@ -275,51 +275,35 @@ export default {
       }
       this.timerSlide = setTimeout(this.autoSlide, 5000);
     },
-    monthSize1() {
-      const size = {};
-      // const TD = this.today;
-      const TD = new Date();
+    monthLen() {
+      const TD = this.today;
       const MM = TD.getMonth(); // 获取当前月份/** 0 ~ 11 */
       TD.setMonth(MM + 1); // 设置月份 为当前月的下一个月
       TD.setDate(0); // 设置一个月中的某一天/**0 为一个月的最后一天 */
-      size.cur = TD.getDate(); // 当前月的总天数
+      this.monthSize.cur = TD.getDate(); // 当前月的总天数
       TD.setFullYear(TD.getFullYear(), MM, 1); // 设置日期  为当前月的第一天
-      size.week = TD.getDay(); // 当前月的第一天星期几
+      this.monthSize.week = TD.getDay(); // 当前月的第一天星期几
       // size.week = TD.getDay() - 1; // 当前月的 上一个月 最后一天 星期几
-      if (size.week < 1) {
-        size.week = null;
+      if (this.monthSize.week < 1) {
+        this.monthSize.week = null;
       }
-      return size;
     },
     rightMonth() {
       const TD = this.today;
       const MM = TD.getMonth(); // 获取当前月份/** 0 ~ 11 */
       TD.setMonth(MM + 1); // 设置月份 为当前月的下一个月
+      this.monthLen();
     },
     leftMonth() {
       const TD = this.today;
       const MM = TD.getMonth(); // 获取当前月份/** 0 ~ 11 */
       TD.setMonth(MM - 1); // 设置月份 为当前月的上一个月
-    }
-  },
-  computed: {
-    monthSize() {
-      const size = {};
-      const TD = this.today;
-      const MM = TD.getMonth(); // 获取当前月份/** 0 ~ 11 */
-      TD.setMonth(MM + 1); // 设置月份 为当前月的下一个月
-      TD.setDate(0); // 设置一个月中的某一天/**0 为一个月的最后一天 */
-      size.cur = TD.getDate(); // 当前月的总天数
-      TD.setFullYear(TD.getFullYear(), MM, 1); // 设置日期  为当前月的第一天
-      size.week = TD.getDay(); // 当前月的第一天星期几
-      // size.week = TD.getDay() - 1; // 当前月的 上一个月 最后一天 星期几
-      if (size.week < 1) {
-        size.week = null;
-      }
-      return size;
+      this.monthLen();
     }
   },
   created() {
+    this.today = new Date();
+    this.monthLen();
     console.log("created");
     document.cookie = "vv=ss";
     document.cookie = "carNamesss=ssss";
@@ -331,10 +315,6 @@ export default {
   mounted() {
     console.log("mounted");
     this.autoSlide();
-    console.log("var d = new Date(year, month, day, hours, minutes, seconds, milliseconds);");
-    console.log(this.today.toLocaleString());
-    console.log(new Date().toLocaleString());
-    console.log("var d = new Date(year, month, day, hours, minutes, seconds, milliseconds);");
   }
 };
 </script>

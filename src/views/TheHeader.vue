@@ -11,7 +11,11 @@
         <el-menu-item v-if="!menu.child" :index="menu.id" :key="menu.id">{{ menu.name }}</el-menu-item>
         <el-submenu v-else :index="menu.id" :key="menu.id">
           <template slot="title">{{ menu.name }}</template>
-          <el-menu-item v-for="menuChild in menu.child" :index="menuChild.id" :key="menuChild.id">
+          <el-menu-item
+            v-for="menuChild in menu.child"
+            :index="menu.id + '/' + menuChild.id"
+            :key="menuChild.id"
+          >
             {{ menuChild.name }}
           </el-menu-item>
         </el-submenu>
@@ -44,11 +48,11 @@ export default {
             },
             {
               name: "JavaScript 代码规范",
-              id: "/jsBase2"
+              id: "jsBase2"
             },
             {
               name: "JavaScript 函数",
-              id: "/jsBase3"
+              id: "jsBase3"
             }
           ]
         },
@@ -62,7 +66,7 @@ export default {
             },
             {
               name: "JavaScript Cookie",
-              id: "/jsBaseHigher2"
+              id: "jsBaseHigher2"
             }
           ]
         },
@@ -70,6 +74,16 @@ export default {
           name: "HelloWorld",
           id: "/hello",
           child: null
+        },
+        {
+          name: "BaseTest",
+          id: "/test",
+          child: [
+            {
+              name: "HelloTest",
+              id: "test1"
+            }
+          ]
         },
         {
           name: "TheLoading",
