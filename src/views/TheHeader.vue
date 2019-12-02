@@ -65,7 +65,7 @@ export default {
               id: "jsBaseHigher1"
             },
             {
-              name: "JavaScript Cookie",
+              name: "Cookie 🍐",
               id: "jsBaseHigher2"
             }
           ]
