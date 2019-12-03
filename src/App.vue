@@ -4,7 +4,7 @@
       <el-backtop target=".wraper" :visibility-height="150"></el-backtop>
     </template>
     <div class="my-head">
-      <img class="logo" src="./assets/logo.png" alt="logo" />
+      <img class="logo" src="./assets/logo.png" width="60" height="60" alt="logo" />
       <TheHeader class="my-nav"></TheHeader>
     </div>
     <router-view />
@@ -52,6 +52,7 @@ body {
   top: 0;
   left: 0;
   width: 60px;
+  height: 60px;
 }
 
 .my-nav {

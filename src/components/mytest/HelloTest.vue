@@ -44,11 +44,45 @@
         <li class="bar3"></li>
       </ul>
       <ol class="flex-name">
-        <li @click="func1">qq</li>
+        <li>qq</li>
         <li style="background:#f00;">qfcc</li>
         <li>🌌☠</li>
       </ol>
     </div>
+    <button type="button" @keyup.13="func1">keyCode</button>
+    <hr color="#f00" />
+    <img
+      src="https://www.runoob.com/try/demo_source/compman.gif"
+      alt="compman"
+      width="107"
+      height="98"
+      align="right"
+    />
+    <p @click="above">一些文本。一些文本。一些文本。一些文本。一些文本。</p>
+    <table border="10" cellPadding="7" cellSpacing="8" id="myTable">
+      <caption>这是一个表格标题</caption>
+      <thead>
+        <tr>
+          <th>1</th>
+          <th>2</th>
+          <th>3</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>4</td>
+          <td>5</td>
+          <td>6</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>7</td>
+          <td>8</td>
+          <td>9</td>
+        </tr>
+      </tfoot>
+    </table>
   </div>
 </template>
 
@@ -82,10 +116,6 @@ export default {
     func1(evt) {
       console.log(evt);
       console.log(evt.keyCode);
-      console.log(evt.keyCodes);
-      // Vue.config.keyCodes = {
-      //   // camelCase won`t work
-      // })
     },
     myFunc1() {
       this.barChange = !this.barChange;
@@ -145,6 +175,9 @@ export default {
         this.monthSize.week = null;
       }
       // return size;
+    },
+    above() {
+      document.getElementById("myTable").frame = "above";
     }
   },
   computed: {
@@ -170,6 +203,33 @@ export default {
     this.myFunc2();
     this.is_weixn();
     console.log("created");
+  },
+  mounted() {
+    const MYCARS = ["Saad", "Volvo", "BMW"];
+    const MYCARS2 = ["Opel", "VW", "Ford"];
+    const OTHER = ["Cadillac", "Land Rover", "Toyota"];
+    const NEWCARS = MYCARS.concat(MYCARS2, OTHER);
+    console.log(MYCARS.concat(MYCARS2));
+    console.log(NEWCARS);
+    console.log(MYCARS.join("-"));
+    console.log(MYCARS.pop());
+    console.log(MYCARS);
+    // BMW
+    console.log(MYCARS.push("//BMW"));
+    console.log(MYCARS);
+    console.log(MYCARS.reverse());
+    console.log(MYCARS);
+    console.log(MYCARS.shift());
+    console.log(MYCARS);
+    console.log(MYCARS.unshift("//BMW//"));
+    console.log(MYCARS.toString());
+    console.log(MYCARS);
+    console.log(NEWCARS.slice(1, 2));
+    console.log(NEWCARS.slice(1));
+    console.log(NEWCARS);
+    console.log(NEWCARS.splice(1));
+    console.log(NEWCARS);
+    console.log(document.images);
   }
 };
 </script>
