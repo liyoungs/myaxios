@@ -17,6 +17,7 @@ const JsBase3 = () => import("@/components/jsbase/JsBase3");
 // js higher
 const JsBaseHigher1 = () => import("@/components/jsbase/JsBaseHigher1");
 const JsBaseHigher2 = () => import("@/components/jsbase/JsBaseHigher2");
+const JsBaseAjax = () => import("@/components/jsbase/JsBaseAjax");
 // my test
 const HelloTest = () => import("@/components/mytest/HelloTest");
 
@@ -80,6 +81,11 @@ const router = new Router({
           path: "jsBaseHigher2",
           name: "JsBaseHigher2",
           component: JsBaseHigher2
+        },
+        {
+          path: "ajax",
+          name: "JsBaseAjax",
+          component: JsBaseAjax
         }
       ]
     },

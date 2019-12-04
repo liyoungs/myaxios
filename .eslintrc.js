@@ -29,7 +29,7 @@ module.exports = {
     semi: "off",
     "vue/no-parsing-error": [2, { "x-invalid-end-tag": false }],
     // 'vue/no-unused-vars': "warn",
-    "max-len": ["error", { code: 110, tabWidth: 2, ignoreTemplateLiterals: true }],
+    "max-len": ["error", { code: 220, tabWidth: 2, ignoreTemplateLiterals: true }],
     "id-length": 0, //变量名长度
     //Strings must use singlequote.
     // allow debugger during development

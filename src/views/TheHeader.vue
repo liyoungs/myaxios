@@ -67,6 +67,10 @@ export default {
             {
               name: "Cookie 🍐",
               id: "jsBaseHigher2"
+            },
+            {
+              name: "Ajax ☯🍖",
+              id: "ajax"
             }
           ]
         },
