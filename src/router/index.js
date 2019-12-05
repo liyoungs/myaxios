@@ -7,6 +7,7 @@ import NotFound from "@/views/NotFound";
 import TheLoading from "@/views/TheLoading";
 import JsBase from "@/components/jsbase/JsBase";
 import BaseTest from "@/components/mytest/BaseTest";
+import ApiBase from "@/components/apiopen/ApiBase";
 
 const HelloWorld = () => import("@/components/HelloWorld");
 const TheAbout = () => import("@/views/TheAbout");
@@ -20,6 +21,8 @@ const JsBaseHigher2 = () => import("@/components/jsbase/JsBaseHigher2");
 const JsBaseAjax = () => import("@/components/jsbase/JsBaseAjax");
 // my test
 const HelloTest = () => import("@/components/mytest/HelloTest");
+// api open
+const WangYiNews = () => import("@/components/apiopen/WangYiNews");
 
 Vue.use(Router);
 
@@ -119,7 +122,31 @@ const router = new Router({
     {
       path: "/loading",
       name: "TheLoading",
-      component: TheLoading
+      component: TheLoading,
+      meta: {
+        requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
+      }
+    },
+    {
+      path: "/apiopen",
+      component: ApiBase,
+      children: [
+        {
+          path: "wynews",
+          name: "WangYiNews",
+          component: WangYiNews
+          //   },
+          //   {
+          //     path: "jsBaseHigher2",
+          //     name: "JsBaseHigher2",
+          //     component: JsBaseHigher2
+          //   },
+          //   {
+          //     path: "ajax",
+          //     name: "JsBaseAjax",
+          //     component: JsBaseAjax
+        }
+      ]
     },
     {
       path: "*",

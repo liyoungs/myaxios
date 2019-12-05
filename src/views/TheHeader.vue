@@ -93,6 +93,16 @@ export default {
           name: "TheLoading",
           id: "/loading",
           child: null
+        },
+        {
+          name: "apiopen",
+          id: "/apiopen",
+          child: [
+            {
+              name: "网易新闻",
+              id: "wynews"
+            }
+          ]
         }
       ]
     };

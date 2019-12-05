@@ -55,7 +55,7 @@ instance.interceptors.request.use(
     /*
      * 响应错误
      * */
-    console.warn(error);
+    // console.warn(error);
     return Promise.reject(error);
   }
 );
@@ -75,7 +75,7 @@ instance.interceptors.response.use(
      *  status >= 200 && status < 300;
      * 成功状态码
      * */
-    console.log(response);
+    // console.log(response);
     return response.status === 200 ? Promise.resolve(response) : Promise.reject(response);
   },
   error => {
@@ -148,9 +148,19 @@ instance.interceptors.response.use(
           });
         })
         .catch(() => {
-          router.push("/about");
+          Message({
+            type: "info",
+            message: "已取消删除"
+          });
+
+          if (
+            router.history.current.query.redirect.indexOf("hello") > -1 ||
+            router.history.current.query.redirect.indexOf("loading") > -1
+          ) {
+            router.push("/about");
+          }
         });
-      console.log(error.config);
+      // console.log(error.config);
       return Promise.reject(error);
     }
   }

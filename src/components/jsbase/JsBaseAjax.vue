@@ -7,11 +7,7 @@
     </el-tag>
     <el-card>
       <el-button slot="header" @click="ajaxInfo">Ajax</el-button>
-      <el-button @click="ajaxGet">ajaxGet</el-button>
-      {{ demo_get }}
-      <ol>
-        <li v-for="(item, index) in ajax_info" :key="index">{{ item.date }}</li>
-      </ol>
+      <el-button v-for="item in ajax_info" :key="item.id" type="primary" round>{{ item.name }}</el-button>
     </el-card>
     <div style="height:36px"></div>
     <el-tabs tabPosition="left">
@@ -228,37 +224,9 @@ export default {
           }
         };
         // i.tianqi.com/index.php?c=code&id=12&icon=1&num=5&site=12
-        XMLHTTP.open("get", "https://api.apiopen.top/todayVideo", true);
+        XMLHTTP.open("get", "https://api.apiopen.top/videoHomeTab", true);
         XMLHTTP.send();
       }
-    },
-    ajaxGet() {
-      const XMLHTTP = new XMLHttpRequest();
-
-      // D:\work\wb\myvue\myaxios\src\assets\sss.json
-      XMLHTTP.open("get", "../../assets/sss.json", true);
-      // XMLHTTP.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-      XMLHTTP.send();
-      XMLHTTP.onreadystatechange = () => {
-        console.log(XMLHTTP);
-        if (XMLHTTP.readyState === 4 && XMLHTTP.status === 200) {
-          const res = XMLHTTP.responseText;
-          console.log(res);
-          // const res = JSON.parse(XMLHTTP.responseText);
-          if (!res.code) {
-            this.demo_get = res;
-          } else {
-            if (res.code === 200) {
-              this.demo_get = res.result;
-              // this.$store.commit("setTodayVideo", res.result);
-            } else {
-              this.demo_get = "没有数据";
-            }
-          }
-        } else {
-          this.demo_get = "请求错误";
-        }
-      };
     }
   },
   created() {},

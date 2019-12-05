@@ -7,7 +7,7 @@ const state = {
   // AUTH_TOKEN: "aksddkdm"
   AUTH_TOKEN: null,
   activeIndex: "/",
-  todayVideo: null
+  wyNewsData: null
 };
 const mutations = {
   setActiveIndex(state, newValue) {
@@ -16,8 +16,8 @@ const mutations = {
   setToken(state, newValue) {
     state.AUTH_TOKEN = newValue;
   },
-  setTodayVideo(state, newValue) {
-    state.todayVideo = newValue;
+  setWyNewsData(state, newValue) {
+    state.wyNewsData = newValue;
   },
   removeToken(state) {
     state.AUTH_TOKEN = null;
