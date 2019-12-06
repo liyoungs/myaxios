@@ -10,7 +10,7 @@ import BaseTest from "@/components/mytest/BaseTest";
 import ApiBase from "@/components/apiopen/ApiBase";
 
 const HelloWorld = () => import("@/components/HelloWorld");
-const TheAbout = () => import("@/views/TheAbout");
+
 // js base
 const JsBase1 = () => import("@/components/jsbase/JsBase1");
 const JsBase2 = () => import("@/components/jsbase/JsBase2");
@@ -18,6 +18,7 @@ const JsBase3 = () => import("@/components/jsbase/JsBase3");
 // js higher
 const JsBaseHigher1 = () => import("@/components/jsbase/JsBaseHigher1");
 const JsBaseHigher2 = () => import("@/components/jsbase/JsBaseHigher2");
+const JsBaseHigher3 = () => import("@/components/jsbase/JsBaseHigher3");
 const JsBaseAjax = () => import("@/components/jsbase/JsBaseAjax");
 // my test
 const HelloTest = () => import("@/components/mytest/HelloTest");
@@ -86,6 +87,11 @@ const router = new Router({
           component: JsBaseHigher2
         },
         {
+          path: "jsBaseHigher3",
+          name: "JsBaseHigher3",
+          component: JsBaseHigher3
+        },
+        {
           path: "ajax",
           name: "JsBaseAjax",
           component: JsBaseAjax
@@ -102,14 +108,6 @@ const router = new Router({
           component: HelloTest
         }
       ]
-    },
-    {
-      path: "/about",
-      name: "TheAbout",
-      component: TheAbout,
-      meta: {
-        requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
-      }
     },
     {
       path: "/hello",

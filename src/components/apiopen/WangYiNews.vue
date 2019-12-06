@@ -93,33 +93,40 @@ export default {
       console.log(page);
     },
     getData() {
-      if (this.$store.state.wyNewsData) {
-        this.ajax_info = this.$store.state.wyNewsData.slice(0, 5);
-      } else {
-        const XMLHTTP = new XMLHttpRequest();
-        XMLHTTP.onreadystatechange = () => {
-          if (XMLHTTP.readyState === 4 && XMLHTTP.status === 200) {
-            // const res = XMLHTTP.responseText;
-            const res = JSON.parse(XMLHTTP.responseText);
-            if (res.code === 200) {
-              this.$store.commit("setWyNewsData", res.result);
-              // this.ajax_info = res.result;
-            } else {
-              this.ajax_info = "没有数据";
-            }
+      const XMLHTTP = new XMLHttpRequest();
+      XMLHTTP.onreadystatechange = () => {
+        if (XMLHTTP.readyState === 4 && XMLHTTP.status === 200) {
+          // const res = XMLHTTP.responseText;
+          const res = JSON.parse(XMLHTTP.responseText);
+          if (res.code === 200) {
+            this.$store.commit("setWyNewsData", res.result);
+            // this.ajax_info = res.result;
           } else {
-            this.ajax_info = "请求错误";
+            this.ajax_info = "没有数据";
           }
-        };
-        // i.tianqi.com/index.php?c=code&id=12&icon=1&num=5&site=12 "page=1&count=5"
-        XMLHTTP.open("post", "https://api.apiopen.top/getWangYiNews", true);
-        XMLHTTP.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        XMLHTTP.send();
-      }
+        } else {
+          this.ajax_info = "请求错误";
+        }
+      };
+      // i.tianqi.com/index.php?c=code&id=12&icon=1&num=5&site=12 "page=1&count=5"
+      XMLHTTP.open("post", "https://api.apiopen.top/getWangYiNews", true);
+      XMLHTTP.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      XMLHTTP.send();
     }
   },
   created() {
-    this.getData();
+    const wyNewsData = this.$store.state.wyNewsData;
+    console.log(wyNewsData[0].passtime <= new Date());
+    if (wyNewsData.length && wyNewsData.length > 0) {
+      if (wyNewsData[0].passtime <= new Date()) {
+        this.getData();
+      } else {
+        this.ajax_info = wyNewsData.slice(0, 5);
+      }
+    } else {
+      this.getData();
+    }
+
     this.total = this.$store.state.wyNewsData.length || 5;
   }
 };

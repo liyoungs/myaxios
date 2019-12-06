@@ -137,27 +137,21 @@ instance.interceptors.response.use(
       // console.log('Error', error.message);
       // MessageBox.confirm(message, title, options)
       MessageBox.confirm(error.message, "Error", {
+        distinguishCancelAndClose: true,
         confirmButtonText: "刷新重试",
         cancelButtonText: "返回首页",
         type: "warning"
       })
         .then(() => {
+          router.go(0);
           Message({
             type: "success",
             message: "刷新成功!"
           });
         })
-        .catch(() => {
-          Message({
-            type: "info",
-            message: "已取消删除"
-          });
-
-          if (
-            router.history.current.query.redirect.indexOf("hello") > -1 ||
-            router.history.current.query.redirect.indexOf("loading") > -1
-          ) {
-            router.push("/about");
+        .catch(action => {
+          if (action === "cancel") {
+            router.push("/");
           }
         });
       // console.log(error.config);

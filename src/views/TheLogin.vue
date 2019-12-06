@@ -21,7 +21,6 @@ export default {
   name: "TheLogin",
   data() {
     const checkAge = (rule, value, callback) => {
-      console.info(rule);
       if (!value) {
         return callback(new Error("年龄不能为空"));
       }
@@ -73,30 +72,30 @@ export default {
   },
   methods: {
     submitForm(formName) {
-      const that = this;
-      that.$refs[formName].validate(valid => {
+      this.$refs[formName].validate(valid => {
         if (valid) {
           const params = {
-            pass: that.myData.pass,
-            checkPass: that.myData.checkPass,
-            age: that.myData.age
+            pass: this.myData.pass,
+            checkPass: this.myData.checkPass,
+            age: this.myData.age
           };
-          that.$ajax.application
+          this.$ajax.application
             .login(params)
             .then(res => {
               console.log("res");
               if (res.data) {
                 console.log(res);
                 if (res.data.token) {
-                  that.$store.commit("setToken", res.data.token);
+                  this.$store.commit("setToken", res.data.token);
                 }
-                console.log(that.$route);
-                const redirectUrl = decodeURIComponent(that.$route.query.redirect || "/");
+                console.log(this.$route);
+                const redirectUrl = decodeURIComponent(this.$route.query.redirect || "/");
                 console.log(redirectUrl);
-                that.$store.commit("setActiveIndex", redirectUrl);
-                that.$router.push(redirectUrl);
+                this.$store.commit("setActiveIndex", redirectUrl);
+                this.$router.push(redirectUrl);
               } else {
-                that.$message({
+                console.log("then error");
+                this.$message({
                   type: "error",
                   message: res.statusText
                 });
@@ -104,16 +103,21 @@ export default {
               console.log("res");
             })
             .catch(error => {
+              console.log("catch error");
               console.warn(error);
-              that.$message({
-                type: "error",
-                message: error.statusText
+              this.$message({
+                type: "success",
+                message: "刷新成功!"
               });
+              // this.$message({
+              //   type: "error",
+              //   message: error.statusText
+              // });
             });
           // alert("submit")
           // } else {
           //     console.warn("error");
-          //     that.$message({
+          //     this.$message({
           //         type: 'error',
           //         message: response.statusText
           //     });

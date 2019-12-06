@@ -71,6 +71,10 @@ export default {
             {
               name: "Ajax ☯🍖",
               id: "ajax"
+            },
+            {
+              name: "Promise 🏹",
+              id: "jsBaseHigher3"
             }
           ]
         },
