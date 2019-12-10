@@ -44,7 +44,7 @@
         <br />
         console.log(4);
       </el-tag>
-      <el-tag type="danger" style="height:auto">
+      <el-tag type="danger" class="code-wrap">
         本例新建一个 Promise 实例🍐对象 ==> PROMISE ，而 Promise的然后执行 PROMISE 的 then 和 catch
         运行结果：1,3,4,2;这是因为 Promise 是一个容器，里面有 resolve 和 reject 两个异步事件，在 PROMISE
         执行之后，输出
@@ -77,7 +77,34 @@
         <br />
         console.log(5);
       </el-tag>
+      <br />
       <el-tag type="danger" style="height:auto">sss</el-tag>
+      <br />
+      <el-tag type="danger" class="code-wrap">
+        const PROMISE = new Promise((resolve, reject) => {
+        <br />
+        console.log(1);
+        <br />
+        reject(4);
+        <br />
+        resolve(2);
+        <br />
+        console.log(3);
+        <br />
+        });
+        <br />
+        PROMISE.then(value => {
+        <br />
+        console.log(value);
+        <br />
+        }).catch(error => {
+        <br />
+        console.log(error);
+        <br />
+        });
+        <br />
+        console.log(5);
+      </el-tag>
     </el-card>
   </div>
 </template>
@@ -98,5 +125,6 @@ export default {
 .code-wrap {
   height: auto;
   line-height: 1.5;
+  white-space: normal;
 }
 </style>

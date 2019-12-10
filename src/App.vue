@@ -1,8 +1,6 @@
 <template>
   <div id="app" class="wraper">
-    <template>
-      <el-backtop target=".wraper" :visibility-height="150"></el-backtop>
-    </template>
+    <el-backtop class="ieHack" target=".wraper" :visibility-height="150"></el-backtop>
     <div class="my-head">
       <img class="logo" src="./assets/logo.png" width="60" height="60" alt="logo" />
       <TheHeader class="my-nav"></TheHeader>
@@ -63,5 +61,9 @@ body {
   overflow-x: hidden;
   padding-top: 64px;
   box-sizing: border-box;
+}
+.ieHack {
+  text-align: center\0; /* IE支持； */
+  line-height: 40px\0; /* IE支持； */
 }
 </style>
