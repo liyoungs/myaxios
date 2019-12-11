@@ -24,7 +24,7 @@ module.exports = {
     "generator-star-spacing": "off",
     "space-before-function-paren": "off",
     "no-unexpected-multiline": "error",
-    printWidth: 110,
+    // printWidth: [2, { max: 110 }],
     quotes: "off",
     semi: "off",
     "vue/no-parsing-error": [2, { "x-invalid-end-tag": false }],
