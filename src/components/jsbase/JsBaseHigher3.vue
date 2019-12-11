@@ -79,32 +79,6 @@
       </el-tag>
       <br />
       <el-tag type="danger" style="height:auto">sss</el-tag>
-      <br />
-      <el-tag type="danger" class="code-wrap">
-        const PROMISE = new Promise((resolve, reject) => {
-        <br />
-        console.log(1);
-        <br />
-        reject(4);
-        <br />
-        resolve(2);
-        <br />
-        console.log(3);
-        <br />
-        });
-        <br />
-        PROMISE.then(value => {
-        <br />
-        console.log(value);
-        <br />
-        }).catch(error => {
-        <br />
-        console.log(error);
-        <br />
-        });
-        <br />
-        console.log(5);
-      </el-tag>
     </el-card>
   </div>
 </template>

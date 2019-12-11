@@ -100,7 +100,8 @@ export default {
           const res = JSON.parse(XMLHTTP.responseText);
           if (res.code === 200) {
             this.$store.commit("setWyNewsData", res.result);
-            // this.ajax_info = res.result;
+            this.ajax_info = res.result.slice(0, 5);
+            this.total = res.result.length;
           } else {
             this.ajax_info = "没有数据";
           }
@@ -116,18 +117,16 @@ export default {
   },
   created() {
     const wyNewsData = this.$store.state.wyNewsData;
-    console.log(wyNewsData[0].passtime <= new Date());
-    if (wyNewsData.length && wyNewsData.length > 0) {
+    if (Array.isArray(wyNewsData) && wyNewsData.length > 0) {
       if (wyNewsData[0].passtime <= new Date()) {
         this.getData();
       } else {
         this.ajax_info = wyNewsData.slice(0, 5);
+        this.total = this.$store.state.wyNewsData.length || 5;
       }
     } else {
       this.getData();
     }
-
-    this.total = this.$store.state.wyNewsData.length || 5;
   }
 };
 </script>
