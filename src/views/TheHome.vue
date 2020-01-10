@@ -7,36 +7,10 @@
       element-loading-text="拼命加载中"
       element-loading-background="rgba(0, 0, 0, 0.8)"
     >
-      <div id="dig1" class="dig">1</div>
-      <div id="dig2" class="dig">2</div>
-      <div id="dig3" class="dig">3</div>
-      <div id="dig4" class="dig">4</div>
-      <div id="dig5" class="dig">5</div>
-      <div id="dig6" class="dig">6</div>
-      <div id="dig7" class="dig">7</div>
-      <div id="dig8" class="dig">8</div>
-      <div id="dig9" class="dig">9</div>
-      <div id="dig10" class="dig">10</div>
-      <div id="dig11" class="dig">11</div>
-      <div id="dig12" class="dig">12</div>
-
-      <div id="hour1" class="hour"></div>
-      <div id="hour2" class="hour"></div>
-      <div id="hour3" class="hour"></div>
-      <div id="hour4" class="hour"></div>
-
-      <div id="min1" class="min"></div>
-      <div id="min2" class="min"></div>
-      <div id="min3" class="min"></div>
-      <div id="min4" class="min"></div>
-      <div id="min5" class="min"></div>
-
-      <div id="sec1" class="sec"></div>
-      <div id="sec2" class="sec"></div>
-      <div id="sec3" class="sec"></div>
-      <div id="sec4" class="sec"></div>
-      <div id="sec5" class="sec"></div>
-      <div id="sec6" class="sec"></div>
+      <div :class="'dig dig' + item" v-for="item in 12" :key="'dig' + item">{{ item }}</div>
+      <div :class="'hour hour' + item" v-for="item in 4" :key="'hour' + item"></div>
+      <div :class="'min min' + item" v-for="item in 5" :key="'min' + item"></div>
+      <div :class="'sec sec' + item" v-for="item in 6" :key="'sec' + item"></div>
     </div>
     <el-tag>{{ myClock }}</el-tag>
     <el-calendar v-model="value" class="my-calendar">
@@ -101,22 +75,22 @@ export default {
       var hr = time.getHours();
       var hrs = (Math.PI * hr) / 6 + (Math.PI * parseInt(time.getMinutes())) / 360 - 1.57;
       for (let i = 0; i < dots; ++i) {
-        const digEle = document.getElementById("dig" + (i + 1));
+        const digEle = document.querySelector(".dig" + (i + 1));
         digEle.style.top = 60 - 15 + 40 * Math.sin(-0.49 + dots + i / 1.9).toString() + "px";
         digEle.style.left = 60 - 14 + 40 * Math.cos(-0.49 + dots + i / 1.9).toString() + "px";
       }
       for (let i = 0; i < 4; i++) {
-        const hourEle = document.getElementById("hour" + (i + 1));
+        const hourEle = document.querySelector(".hour" + (i + 1));
         hourEle.style.top = Ypos + i * Ybase * Math.sin(hrs).toString() + "px";
         hourEle.style.left = Xpos + i * Xbase * Math.cos(hrs).toString() + "px";
       }
       for (let i = 0; i < 5; i++) {
-        const minEle = document.getElementById("min" + (i + 1));
+        const minEle = document.querySelector(".min" + (i + 1));
         minEle.style.top = Ypos + i * Ybase * Math.sin(min).toString() + "px";
         minEle.style.left = Xpos + i * Xbase * Math.cos(min).toString() + "px";
       }
       for (let i = 0; i < 6; i++) {
-        const secEle = document.getElementById("sec" + (i + 1));
+        const secEle = document.querySelector(".sec" + (i + 1));
         secEle.style.top = Ypos + i * Ybase * Math.sin(sec).toString() + "px";
         secEle.style.left = Xpos + i * Xbase * Math.cos(sec).toString() + "px";
       }
